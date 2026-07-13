@@ -39,6 +39,21 @@
 }
 
 @layer components {
+  /* pinurile de pe harta (Leaflet divIcon) — umbra + crestere la hover */
+  .pin {
+    background: none;
+    border: none;
+  }
+  .pin svg {
+    display: block;
+    transition: transform 0.12s ease;
+    transform-origin: 50% 100%;
+    filter: drop-shadow(0 3px 3px rgba(33, 30, 24, 0.35));
+  }
+  .pin:hover svg {
+    transform: scale(1.18);
+  }
+
   /* placuta emailata, motivul firmelor stradale din Bucuresti */
   .plaque {
     display: inline-block;
