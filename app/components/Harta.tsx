@@ -3,7 +3,7 @@
 import L from "leaflet";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { CULOARE_TIP, LOCURI, type Loc } from "../data/locuri";
+import { CULOARE_TIP, type Loc } from "../data/locuri";
 
 /* Pinul-picatura din proiectul vechi: colorat pe tipul locului, contur alb,
    insigna de alama pentru locurile marcate "Nerenovat". */
@@ -31,7 +31,7 @@ function pinIcon(loc: Loc) {
 
 /* Aceiasi parametri ca in proiectul vechi (explorator_bucuresti_4.html):
    centru Bucuresti [44.435, 26.095], zoom 13, tile layer CARTO light. */
-export default function Harta() {
+export default function Harta({ locuri }: { locuri: Loc[] }) {
   return (
     <MapContainer
       center={[44.435, 26.095]}
@@ -44,7 +44,7 @@ export default function Harta() {
         attribution="&copy; OpenStreetMap &copy; CARTO"
         maxZoom={19}
       />
-      {LOCURI.filter((loc) => loc.lat !== null && loc.lng !== null).map(
+      {locuri.filter((loc) => loc.lat !== null && loc.lng !== null).map(
         (loc) => (
           <Marker
             key={loc.nume}
