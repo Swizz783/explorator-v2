@@ -38,6 +38,18 @@
   }
 }
 
+/* animatia de aparitie a modalului de detaliu, ca in proiectul vechi (@keyframes pop) */
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @layer components {
   /* pinurile de pe harta (Leaflet divIcon) — umbra + crestere la hover */
   .pin {

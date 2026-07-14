@@ -29,9 +29,14 @@ function pinIcon(loc: Loc) {
   });
 }
 
+type Props = {
+  locuri: Loc[];
+  onSelect?: (loc: Loc) => void;
+};
+
 /* Aceiasi parametri ca in proiectul vechi (explorator_bucuresti_4.html):
    centru Bucuresti [44.435, 26.095], zoom 13, tile layer CARTO light. */
-export default function Harta({ locuri }: { locuri: Loc[] }) {
+export default function Harta({ locuri, onSelect }: Props) {
   return (
     <MapContainer
       center={[44.435, 26.095]}
@@ -51,6 +56,9 @@ export default function Harta({ locuri }: { locuri: Loc[] }) {
             position={[loc.lat as number, loc.lng as number]}
             icon={pinIcon(loc)}
             riseOnHover
+            eventHandlers={
+              onSelect ? { click: () => onSelect(loc) } : undefined
+            }
           />
         ),
       )}
