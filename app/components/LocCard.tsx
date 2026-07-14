@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import type { Loc } from "../data/locuri";
 import Placeholder from "./Placeholder";
 import Tags from "./Tag";
+import VisitButton from "./VisitButton";
 
 type Props = {
   loc: Loc;
@@ -57,10 +58,11 @@ export default function LocCard({ loc, activ, onClick }: Props) {
           {loc.descriereScurta}
         </p>
         {loc.arhitect && (
-          <p className="mt-2 text-[11.5px] text-ink-soft">
+          <p className="mb-3 mt-2 text-[11.5px] text-ink-soft">
             Arhitect: {loc.arhitect}
           </p>
         )}
+        <VisitButton nume={loc.nume} className={loc.arhitect ? "" : "mt-3"} />
       </div>
     </div>
   );

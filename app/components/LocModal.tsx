@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import type { Loc } from "../data/locuri";
 import Placeholder from "./Placeholder";
 import Tags from "./Tag";
+import VisitButton from "./VisitButton";
 
 type Props = {
   loc: Loc;
@@ -111,6 +112,7 @@ export default function LocModal({ loc, onClose }: Props) {
           <div className="text-[15px] leading-[1.7] text-[#3a362d]">
             {loc.descriereLunga || loc.descriereScurta}
           </div>
+          <VisitButton nume={loc.nume} className="mt-[22px] max-w-[280px]" />
         </div>
       </div>
     </div>
