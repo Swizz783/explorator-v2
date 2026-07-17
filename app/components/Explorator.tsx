@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
-import { LOCURI, type Loc, type Stil, type Tip } from "../data/locuri";
+import { type Loc, type Stil, type Tip } from "../data/locuri";
 import Filtre from "./Filtre";
 import LocCard from "./LocCard";
 import LocModal from "./LocModal";
@@ -18,23 +18,35 @@ const Harta = dynamic(() => import("./Harta"), {
   ),
 });
 
-export default function Explorator() {
+type Props = {
+  locuri: Loc[];
+};
+
+export default function Explorator({ locuri }: Props) {
   const [tip, setTip] = useState<Tip | "toate">("toate");
   const [stil, setStil] = useState<Stil | "toate">("toate");
   const [doarNerenovate, setDoarNerenovate] = useState(false);
   const [activLoc, setActivLoc] = useState<Loc | null>(null);
 
+  /* Valorile filtrelor vin din date (ca in proiectul vechi):
+     un tip sau stil nou aparut in Supabase primeste automat chip. */
+  const tipuri = useMemo(() => [...new Set(locuri.map((l) => l.tip))], [locuri]);
+  const stiluri = useMemo(
+    () => [...new Set(locuri.map((l) => l.stil).filter((s): s is Stil => s !== null))],
+    [locuri],
+  );
+
   /* Filtrele se combina cu SI logic, ca in proiectul vechi (visibleSet).
      Cardurile si pinurile folosesc aceeasi lista filtrata. */
   const locuriFiltrate = useMemo(
     () =>
-      LOCURI.filter(
+      locuri.filter(
         (l) =>
           (tip === "toate" || l.tip === tip) &&
           (stil === "toate" || l.stil === stil) &&
           (!doarNerenovate || l.nerenovat),
       ),
-    [tip, stil, doarNerenovate],
+    [locuri, tip, stil, doarNerenovate],
   );
 
   return (
@@ -42,6 +54,8 @@ export default function Explorator() {
       <Filtre
         tip={tip}
         stil={stil}
+        tipuri={tipuri}
+        stiluri={stiluri}
         doarNerenovate={doarNerenovate}
         onTip={setTip}
         onStil={setStil}

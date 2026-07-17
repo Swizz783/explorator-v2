@@ -1,17 +1,12 @@
 "use client";
 
-import { LOCURI, type Stil, type Tip } from "../data/locuri";
-
-/* Valorile filtrelor vin din date (ca in proiectul vechi):
-   un tip sau stil nou aparut in locuri.ts primeste automat chip. */
-const TIPURI = [...new Set(LOCURI.map((l) => l.tip))];
-const STILURI = [
-  ...new Set(LOCURI.map((l) => l.stil).filter((s): s is Stil => s !== null)),
-];
+import { type Stil, type Tip } from "../data/locuri";
 
 type Props = {
   tip: Tip | "toate";
   stil: Stil | "toate";
+  tipuri: Tip[];
+  stiluri: Stil[];
   doarNerenovate: boolean;
   onTip: (t: Tip | "toate") => void;
   onStil: (s: Stil | "toate") => void;
@@ -56,6 +51,8 @@ function Eticheta({ children }: { children: React.ReactNode }) {
 export default function Filtre({
   tip,
   stil,
+  tipuri,
+  stiluri,
   doarNerenovate,
   onTip,
   onStil,
@@ -68,7 +65,7 @@ export default function Filtre({
         <Chip activ={stil === "toate"} onClick={() => onStil("toate")}>
           Toate
         </Chip>
-        {STILURI.map((s) => (
+        {stiluri.map((s) => (
           <Chip key={s} activ={stil === s} onClick={() => onStil(s)}>
             {s}
           </Chip>
@@ -79,7 +76,7 @@ export default function Filtre({
         <Chip activ={tip === "toate"} onClick={() => onTip("toate")}>
           Toate
         </Chip>
-        {TIPURI.map((t) => (
+        {tipuri.map((t) => (
           <Chip key={t} activ={tip === t} onClick={() => onTip(t)}>
             {t}
           </Chip>

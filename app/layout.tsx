@@ -4,6 +4,7 @@ import Link from "next/link";
 import "./globals.css";
 import NavLinks from "./components/NavLinks";
 import ProgressBar from "./components/ProgressBar";
+import { getLocuriTotal } from "./lib/locatii";
 import { VisitedProvider } from "./store/VisitedContext";
 
 const fraunces = Fraunces({
@@ -23,18 +24,20 @@ export const metadata: Metadata = {
     "Ghid de arhitectură urbană a Bucureștiului: palate, biserici, brutalism și locuri ascunse.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const total = await getLocuriTotal();
+
   return (
     <html
       lang="ro"
       className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-plaster text-ink font-sans">
-        <VisitedProvider>
+        <VisitedProvider total={total}>
           <header className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 border-b border-line px-7 py-4">
             <div className="flex items-center gap-4 justify-self-start">
               <Link href="/" className="plaque text-[15px]">

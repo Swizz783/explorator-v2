@@ -8,7 +8,6 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { LOCURI } from "../data/locuri";
 
 const STORAGE_KEY = "explorer2_visited";
 
@@ -23,7 +22,13 @@ type VisitedContextValue = {
 
 const VisitedContext = createContext<VisitedContextValue | null>(null);
 
-export function VisitedProvider({ children }: { children: ReactNode }) {
+export function VisitedProvider({
+  total,
+  children,
+}: {
+  total: number;
+  children: ReactNode;
+}) {
   const [visited, setVisited] = useState<Set<string>>(new Set());
 
   /* Incarcarea din localStorage se face dupa montare (nu in SSR),
@@ -52,10 +57,7 @@ export function VisitedProvider({ children }: { children: ReactNode }) {
     });
   }
 
-  const value = useMemo(
-    () => ({ visited, toggle, total: LOCURI.length }),
-    [visited],
-  );
+  const value = useMemo(() => ({ visited, toggle, total }), [visited, total]);
 
   return (
     <VisitedContext.Provider value={value}>
