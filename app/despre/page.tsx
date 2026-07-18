@@ -60,7 +60,7 @@ export default function DesprePage() {
       </ul>
 
       <Link
-        href="/"
+        href="/harta"
         className="mt-6 inline-flex items-center rounded-[9px] bg-ink px-[22px] py-[13px] text-sm font-semibold text-plaster-2 transition hover:bg-enamel-deep"
       >
         Descoperă harta &rarr;
