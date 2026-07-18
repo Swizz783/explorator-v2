@@ -12,7 +12,7 @@ import { calculeazaAchievements } from "../lib/achievements";
 import { createClient } from "../lib/supabase/client";
 
 const STORAGE_KEY = "explorer2_visited";
-const DURATA_TOAST_MS = 4000;
+const DURATA_TOAST_MS = 3500;
 const DURATA_IESIRE_MS = 300;
 
 /* Sursa unica pentru progresul de vizitare. Vizitatori neautentificati: localStorage,
