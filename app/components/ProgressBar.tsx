@@ -10,7 +10,7 @@ export default function ProgressBar() {
   const pct = total ? Math.round((done / total) * 100) : 0;
 
   return (
-    <div className="hidden items-center gap-2.5 justify-self-end sm:flex">
+    <div className="hidden items-center gap-2.5 sm:flex">
       <span className="whitespace-nowrap text-xs text-ink-soft">
         {done} / {total} vizitate
       </span>

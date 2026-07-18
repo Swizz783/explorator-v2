@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
+import AuthStatus from "./components/AuthStatus";
 import NavLinks from "./components/NavLinks";
 import ProgressBar from "./components/ProgressBar";
 import { getLocuriTotal } from "./lib/locatii";
+import { createClient } from "./lib/supabase/server";
 import { VisitedProvider } from "./store/VisitedContext";
 
 const fraunces = Fraunces({
@@ -31,6 +33,11 @@ export default async function RootLayout({
 }>) {
   const total = await getLocuriTotal();
 
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <html
       lang="ro"
@@ -48,7 +55,10 @@ export default async function RootLayout({
               </span>
             </div>
             <NavLinks />
-            <ProgressBar />
+            <div className="flex items-center gap-4 justify-self-end">
+              <ProgressBar />
+              <AuthStatus email={user?.email ?? null} />
+            </div>
           </header>
           <main className="mx-auto w-full max-w-[1080px] flex-1 px-7">
             {children}
