@@ -45,15 +45,3 @@ export async function getLocuri(): Promise<Loc[]> {
 
   return (data ?? []).map(mapRow);
 }
-
-export async function getLocuriTotal(): Promise<number> {
-  const { count, error } = await supabase
-    .from("locatii")
-    .select("*", { count: "exact", head: true });
-
-  if (error) {
-    throw new Error(`Nu s-a putut numara locatiile din Supabase: ${error.message}`);
-  }
-
-  return count ?? 0;
-}

@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "../lib/supabase/server";
@@ -29,6 +30,9 @@ export async function login(formData: FormData) {
     redirect(`/autentificare?eroare=${encodeURIComponent(traduError(error.message))}`);
   }
 
+  // Fara asta, layout-ul (header-ul) poate ramane cu starea veche de autentificare
+  // in cache-ul de rutare al Next.js dupa redirect — vezi nota din docs la `redirect`.
+  revalidatePath("/", "layout");
   redirect("/");
 }
 
@@ -49,6 +53,7 @@ export async function signup(formData: FormData) {
   // Daca proiectul Supabase are dezactivata confirmarea prin email,
   // signUp autentifica direct utilizatorul (sesiune disponibila imediat).
   if (data.session) {
+    revalidatePath("/", "layout");
     redirect("/");
   }
 
@@ -80,5 +85,6 @@ export async function loginWithGoogle() {
 export async function logout() {
   const supabase = await createClient();
   await supabase.auth.signOut();
+  revalidatePath("/", "layout");
   redirect("/");
 }

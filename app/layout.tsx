@@ -5,8 +5,9 @@ import "./globals.css";
 import AuthStatus from "./components/AuthStatus";
 import NavLinks from "./components/NavLinks";
 import ProgressBar from "./components/ProgressBar";
-import { getLocuriTotal } from "./lib/locatii";
+import { getLocuri } from "./lib/locatii";
 import { createClient } from "./lib/supabase/server";
+import { getVizitatePentruUser } from "./lib/vizitat";
 import { VisitedProvider } from "./store/VisitedContext";
 
 const fraunces = Fraunces({
@@ -31,12 +32,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const total = await getLocuriTotal();
+  const locuri = await getLocuri();
 
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  const initialVisited = user ? await getVizitatePentruUser(user.id) : [];
 
   return (
     <html
@@ -44,7 +46,12 @@ export default async function RootLayout({
       className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-plaster text-ink font-sans">
-        <VisitedProvider total={total}>
+        <VisitedProvider
+          total={locuri.length}
+          userId={user?.id ?? null}
+          initialVisited={initialVisited}
+          locuri={locuri}
+        >
           <header className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 border-b border-line px-7 py-4">
             <div className="flex items-center gap-4 justify-self-start">
               <Link href="/" className="plaque text-[15px]">
@@ -57,7 +64,7 @@ export default async function RootLayout({
             <NavLinks />
             <div className="flex items-center gap-4 justify-self-end">
               <ProgressBar />
-              <AuthStatus email={user?.email ?? null} />
+              <AuthStatus loggedIn={Boolean(user)} />
             </div>
           </header>
           <main className="mx-auto w-full max-w-[1080px] flex-1 px-7">

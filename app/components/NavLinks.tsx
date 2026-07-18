@@ -7,6 +7,7 @@ const LINKS = [
   { href: "/", label: "Harta" },
   { href: "/despre", label: "Despre" },
   { href: "/credite", label: "Credite" },
+  { href: "/profil", label: "Profil" },
 ];
 
 /* Navigatia principala, in stilul firmelor stradale din proiectul vechi (.mainnav):
