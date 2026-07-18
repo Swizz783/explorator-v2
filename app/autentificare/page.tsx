@@ -4,7 +4,7 @@ import AuthForm from "../components/AuthForm";
 import { createClient } from "../lib/supabase/server";
 
 export const metadata: Metadata = {
-  title: "Autentificare · Explorator București",
+  title: "Autentificare · BucQuest",
 };
 
 type Props = {

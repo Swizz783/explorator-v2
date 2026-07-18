@@ -25,15 +25,14 @@ export default async function Home() {
         <div className="text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-soft">
           Ghid de arhitectură urbană · București
         </div>
-        <h1 className="mt-4 text-[clamp(38px,6vw,74px)] font-semibold leading-[1.02] tracking-[-0.015em]">
-          Orașul pe care
-          <br />
-          nu-l vezi <em className="text-enamel">din mașină</em>.
+        <h1 className="mt-4 flex flex-wrap items-baseline gap-x-3 text-[clamp(38px,6vw,74px)] font-semibold leading-[1.02] tracking-[-0.015em]">
+          <span>BucQuest</span>
+          <span className="text-[clamp(14px,2vw,20px)] font-medium text-ink-soft">
+            Discover Bucharest
+          </span>
         </h1>
         <p className="mt-5 max-w-[52ch] text-[clamp(15px,1.8vw,18px)] leading-[1.6] text-ink-soft">
-          O hartă a Bucureștiului clădire cu clădire: palate Belle Époque, beton brutalist, art
-          deco interbelic și biserici ascunse. Filtrează după tip sau stil, citește povestea
-          fiecărui loc și bifează-le pe cele în care ai fost.
+          Descoperă patrimoniul și locurile ascunse ale Bucureștiului.
         </p>
         <div className="mt-7 flex flex-wrap gap-3">
           <Link

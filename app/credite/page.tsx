@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { CREDITE } from "../data/credite";
 
 export const metadata: Metadata = {
-  title: "Credite foto · Explorator București",
+  title: "Credite foto · BucQuest",
 };
 
 /* Continut portat identic din proiectul vechi (sectiunea #credite / buildCredite()).

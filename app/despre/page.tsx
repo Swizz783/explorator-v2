@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Despre · Explorator București",
+  title: "Despre · BucQuest",
 };
 
 /* Continut portat identic din proiectul vechi (explorator_bucuresti_4.html, sectiunea #despre). */
@@ -17,7 +17,7 @@ export default function DesprePage() {
       </h2>
 
       <p className="mt-5 text-[15px] leading-[1.75] text-[#3a362d]">
-        Explorator București este o hartă a orașului, clădire cu clădire: palate
+        BucQuest este o hartă a orașului, clădire cu clădire: palate
         Belle Époque, beton brutalist, art deco interbelic, biserici ascunse
         prin curți și străzi întregi rămase ca acum o sută de ani. Pentru
         fiecare loc am adunat povestea lui — cine l-a construit, când și de ce

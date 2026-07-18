@@ -8,7 +8,7 @@ import { createClient } from "../lib/supabase/server";
 import { getVizitatePentruUser } from "../lib/vizitat";
 
 export const metadata: Metadata = {
-  title: "Profil · Explorator București",
+  title: "Profil · BucQuest",
 };
 
 export default async function ProfilPage() {

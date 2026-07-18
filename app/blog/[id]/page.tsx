@@ -21,9 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const articol = await incarcaArticol(id);
   return {
-    title: articol
-      ? `${articol.titlu} · Explorator București`
-      : "Articol negăsit · Explorator București",
+    title: articol ? `${articol.titlu} · BucQuest` : "Articol negăsit · BucQuest",
   };
 }
 

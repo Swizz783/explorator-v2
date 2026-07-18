@@ -3,7 +3,7 @@ import ArticolCard from "../components/ArticolCard";
 import { getArticole } from "../lib/articole";
 
 export const metadata: Metadata = {
-  title: "Blog · Explorator București",
+  title: "Blog · BucQuest",
 };
 
 export default async function BlogPage() {

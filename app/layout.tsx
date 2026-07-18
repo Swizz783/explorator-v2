@@ -22,9 +22,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Explorator București",
-  description:
-    "Ghid de arhitectură urbană a Bucureștiului: palate, biserici, brutalism și locuri ascunse.",
+  title: "BucQuest — Discover Bucharest",
+  description: "BucQuest — Discover Bucharest",
 };
 
 export default async function RootLayout({
@@ -55,10 +54,10 @@ export default async function RootLayout({
           <header className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 border-b border-line px-7 py-4">
             <div className="flex items-center gap-4 justify-self-start">
               <Link href="/" className="plaque text-[15px]">
-                Explorator București
+                BucQuest
               </Link>
               <span className="hidden text-xs text-ink-soft sm:inline">
-                ghid de arhitectură urbană
+                Discover Bucharest
               </span>
             </div>
             <NavLinks />
