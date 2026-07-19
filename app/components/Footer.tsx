@@ -50,6 +50,7 @@ function IconLink({ href, label, children }: { href: string | null; label: strin
 const LINKURI_NAVIGATIE = [
   { href: "/harta", label: "Hartă" },
   { href: "/blog", label: "Blog" },
+  { href: "/galerie", label: "Galerie" },
   { href: "/despre", label: "Despre" },
   { href: "/profil", label: "Profil" },
 ];
