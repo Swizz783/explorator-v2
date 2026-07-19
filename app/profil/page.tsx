@@ -37,7 +37,7 @@ export default async function ProfilPage() {
   const speciale = achievements.filter((a) => a.categorie === "special");
 
   return (
-    <div className="max-w-[880px] py-8 pb-16">
+    <div className="mx-auto w-full max-w-[880px] px-7 py-8 pb-16">
       <div className="text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-soft">
         Cont
       </div>

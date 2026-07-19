@@ -11,7 +11,7 @@ export const metadata: Metadata = {
    cele 72 de atribuiri, neomise si neprescurtate (informatie cu relevanta legala). */
 export default function CreditePage() {
   return (
-    <div className="py-8 pb-16">
+    <div className="mx-auto w-full max-w-[1080px] px-7 py-8 pb-16">
       <div className="text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-soft">
         Atribuiri
       </div>

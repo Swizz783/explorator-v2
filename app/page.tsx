@@ -19,7 +19,7 @@ export default async function Home() {
   const stiluri = [...new Set(locuri.map((l) => l.stil).filter((s): s is Stil => s !== null))];
 
   return (
-    <div className="pb-16">
+    <div className="mx-auto w-full max-w-[1080px] px-7 pb-16">
       {/* ---------- HERO ---------- */}
       <div className="py-10">
         <div className="text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-soft">

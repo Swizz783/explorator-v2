@@ -3,6 +3,8 @@ import { Fraunces, Inter } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import AuthStatus from "./components/AuthStatus";
+import Footer from "./components/Footer";
+import MainArea from "./components/MainArea";
 import NavLinks from "./components/NavLinks";
 import ProgressBar from "./components/ProgressBar";
 import { getLocuri } from "./lib/locatii";
@@ -44,7 +46,7 @@ export default async function RootLayout({
       lang="ro"
       className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-plaster text-ink font-sans">
+      <body className="flex h-full flex-col bg-plaster text-ink font-sans">
         <VisitedProvider
           total={locuri.length}
           userId={user?.id ?? null}
@@ -66,9 +68,8 @@ export default async function RootLayout({
               <AuthStatus loggedIn={Boolean(user)} />
             </div>
           </header>
-          <main className="mx-auto w-full max-w-[1080px] flex-1 px-7">
-            {children}
-          </main>
+          <MainArea>{children}</MainArea>
+          <Footer />
         </VisitedProvider>
       </body>
     </html>

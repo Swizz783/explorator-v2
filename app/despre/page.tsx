@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 /* Continut portat identic din proiectul vechi (explorator_bucuresti_4.html, sectiunea #despre). */
 export default function DesprePage() {
   return (
-    <div className="max-w-[820px] py-8 pb-16">
+    <div className="mx-auto w-full max-w-[820px] px-7 py-8 pb-16">
       <div className="text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-soft">
         Despre proiect
       </div>

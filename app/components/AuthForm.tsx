@@ -37,7 +37,7 @@ export default function AuthForm({ eroare, mesaj }: Props) {
   const [mod, setMod] = useState<"login" | "inregistrare">("login");
 
   return (
-    <div className="mx-auto max-w-[400px] py-10">
+    <div className="mx-auto w-full max-w-[400px] px-7 py-10">
       <div className="text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-soft">
         Cont
       </div>

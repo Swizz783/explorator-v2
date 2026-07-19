@@ -19,15 +19,13 @@ export default async function HartaPage({ searchParams }: Props) {
   const initialStil = stil && stiluriValide.has(stil as Stil) ? (stil as Stil) : null;
 
   return (
-    <div className="py-7">
-      <div className="flex h-[70vh] flex-col overflow-hidden rounded-xl border border-line shadow-card">
-        <Explorator
-          locuri={locuri}
-          initialTip={initialTip}
-          initialStil={initialStil}
-          traseu={traseuActiv}
-        />
-      </div>
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+      <Explorator
+        locuri={locuri}
+        initialTip={initialTip}
+        initialStil={initialStil}
+        traseu={traseuActiv}
+      />
     </div>
   );
 }

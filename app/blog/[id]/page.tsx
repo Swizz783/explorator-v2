@@ -38,7 +38,7 @@ export default async function ArticolPage({ params }: Props) {
   });
 
   return (
-    <div className="max-w-[760px] py-8 pb-16">
+    <div className="mx-auto w-full max-w-[760px] px-7 py-8 pb-16">
       <Link href="/blog" className="text-sm font-medium text-enamel">
         ← Toate articolele
       </Link>
