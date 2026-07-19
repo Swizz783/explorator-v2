@@ -19,6 +19,9 @@
   --color-enamel: #164a7a;
   --color-enamel-deep: #0f3457;
 
+  /* aproape negru, cu subton albastru — fundalul footer-ului, mai inchis decat enamel */
+  --color-midnight: #0d1b2a;
+
   /* accente */
   --color-verdigris: #3f7d6c;
   --color-brass: #a8823f;
