@@ -4,6 +4,7 @@ import Link from "next/link";
 import "./globals.css";
 import AuthStatus from "./components/AuthStatus";
 import Footer from "./components/Footer";
+import FooterGate from "./components/FooterGate";
 import MainArea from "./components/MainArea";
 import NavLinks from "./components/NavLinks";
 import ProgressBar from "./components/ProgressBar";
@@ -69,7 +70,9 @@ export default async function RootLayout({
             </div>
           </header>
           <MainArea>{children}</MainArea>
-          <Footer />
+          <FooterGate>
+            <Footer />
+          </FooterGate>
         </VisitedProvider>
       </body>
     </html>
