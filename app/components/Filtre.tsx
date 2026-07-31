@@ -1,6 +1,7 @@
 "use client";
 
-import { type Stil, type Tip } from "../data/locuri";
+import { CULOARE_STIL, type Stil, type Tip } from "../data/locuri";
+import { ICOANA_TIP } from "../data/iconite";
 
 type Props = {
   tip: Tip | "toate";
@@ -31,7 +32,7 @@ function Chip({
   return (
     <button
       onClick={onClick}
-      className={`flex-none whitespace-nowrap rounded-full border px-3 py-[5px] text-[12.5px] font-medium transition ${
+      className={`flex flex-none items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-[5px] text-[12.5px] font-medium transition ${
         activ ? activCls : "border-line bg-card text-ink-soft hover:border-enamel"
       }`}
     >
@@ -67,6 +68,11 @@ export default function Filtre({
         </Chip>
         {stiluri.map((s) => (
           <Chip key={s} activ={stil === s} onClick={() => onStil(s)}>
+            <span
+              className="h-2 w-2 flex-none rounded-full"
+              style={{ background: CULOARE_STIL[s] }}
+              aria-hidden="true"
+            />
             {s}
           </Chip>
         ))}
@@ -76,11 +82,15 @@ export default function Filtre({
         <Chip activ={tip === "toate"} onClick={() => onTip("toate")}>
           Toate
         </Chip>
-        {tipuri.map((t) => (
-          <Chip key={t} activ={tip === t} onClick={() => onTip(t)}>
-            {t}
-          </Chip>
-        ))}
+        {tipuri.map((t) => {
+          const Iconita = ICOANA_TIP[t];
+          return (
+            <Chip key={t} activ={tip === t} onClick={() => onTip(t)}>
+              {Iconita && <Iconita size={13} strokeWidth={2} aria-hidden="true" />}
+              {t}
+            </Chip>
+          );
+        })}
         <div className="ml-auto flex-none pl-2">
           <Chip activ={doarNerenovate} varianta="neren" onClick={onNerenovate}>
             Doar nerenovate

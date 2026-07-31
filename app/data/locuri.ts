@@ -20,11 +20,14 @@ export interface Loc {
   poze: string[];
 }
 
-/* Culorile pinurilor pe TIP de loc — identice cu proiectul vechi (TIP_COLOR). */
+/* Culorile pe TIP de loc — folosite pe etichete si pe tile-urile de categorii.
+   Pastrate din proiectul vechi (TIP_COLOR), cu doua ajustari: "Cafenea / restaurant"
+   si "Cladire" erau prea apropiate perceptual de "Loc insolit", respectiv "Monument"
+   (dE CIE76 sub 23); acum toate perechile sunt peste 27. */
 export const CULOARE_TIP: Record<Tip, string> = {
   "Biserica": "#a8823f",
-  "Cafenea / restaurant": "#c05a2e",
-  "Cladire": "#52606d",
+  "Cafenea / restaurant": "#6b4423",
+  "Cladire": "#667f96",
   "Loc insolit": "#d64545",
   "Monument": "#3a3630",
   "Muzeu": "#7b4fa6",
@@ -33,6 +36,27 @@ export const CULOARE_TIP: Record<Tip, string> = {
   "Pasaj": "#0f8a8a",
   "Strada": "#c2578f",
 };
+
+/* Culorile pe STIL arhitectural — codificarea principala a pinurilor de pe harta
+   (tipul e transmis de iconita din pin, vezi ICOANA_TIP). Alese cu nuante semantice
+   — ocru brancovenesc, beton brutalist, jad art deco, albastru neoclasic, purpuriu
+   neogotic, caramiziu neoromanesc — si verificate sa fie distincte intre ele
+   (dE CIE76 minim 35) si lizibile pe fundalul deschis al hartii (contrast >= 3:1). */
+export const CULOARE_STIL: Record<Stil, string> = {
+  "Brancovenesc": "#b0740a",
+  "Comunist / brutalist": "#2f4a63",
+  "Interbelic / art deco": "#0d8f7a",
+  "Neoclasic / eclectic": "#1c5fb0",
+  "Neogotic": "#7d3cad",
+  "Neoromanesc": "#c0392b",
+};
+
+/* Locurile fara stil declarat (10 din 32) primesc un gri cald neutru, inclus si in legenda. */
+export const CULOARE_FARA_STIL = "#8a8074";
+
+export function culoarePentruStil(stil: Stil | null): string {
+  return stil ? CULOARE_STIL[stil] : CULOARE_FARA_STIL;
+}
 
 export const LOCURI: Loc[] = [
   {

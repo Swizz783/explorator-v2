@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ArticolCard from "./components/ArticolCard";
-import { CULOARE_TIP, type Stil } from "./data/locuri";
+import { CULOARE_STIL, CULOARE_TIP, type Stil } from "./data/locuri";
+import { ICOANA_TIP } from "./data/iconite";
 import { TRASEE } from "./data/trasee";
 import { getUltimeleArticole, type Articol } from "./lib/articole";
 import { getLocuri } from "./lib/locatii";
@@ -109,26 +110,31 @@ export default async function Home() {
       <section id="categorii" className="mt-14 scroll-mt-6">
         <h2 className="text-2xl font-semibold">Explorează pe categorii</h2>
         <div className="mt-4 flex flex-wrap gap-2.5">
-          {tipuri.map((t) => (
-            <Link
-              key={`tip-${t}`}
-              href={`/harta?tip=${encodeURIComponent(t)}`}
-              className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-[13.5px] font-medium text-ink transition hover:-translate-y-0.5 hover:border-enamel hover:text-enamel"
-            >
-              <span
-                className="h-[9px] w-[9px] rounded-full"
-                style={{ background: CULOARE_TIP[t] }}
-              />
-              {t}
-            </Link>
-          ))}
+          {tipuri.map((t) => {
+            const Iconita = ICOANA_TIP[t];
+            return (
+              <Link
+                key={`tip-${t}`}
+                href={`/harta?tip=${encodeURIComponent(t)}`}
+                className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-[13.5px] font-medium text-ink transition hover:-translate-y-0.5 hover:border-enamel hover:text-enamel"
+              >
+                {Iconita && (
+                  <Iconita size={15} strokeWidth={2} style={{ color: CULOARE_TIP[t] }} aria-hidden="true" />
+                )}
+                {t}
+              </Link>
+            );
+          })}
           {stiluri.map((s) => (
             <Link
               key={`stil-${s}`}
               href={`/harta?stil=${encodeURIComponent(s)}`}
               className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-[13.5px] font-medium text-ink transition hover:-translate-y-0.5 hover:border-enamel hover:text-enamel"
             >
-              <span className="h-[9px] w-[9px] rounded-full bg-enamel" />
+              <span
+                className="h-[9px] w-[9px] rounded-full"
+                style={{ background: CULOARE_STIL[s] }}
+              />
               {s}
             </Link>
           ))}

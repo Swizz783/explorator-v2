@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { type Loc, type Stil, type Tip } from "../data/locuri";
 import type { Traseu } from "../data/trasee";
 import Filtre from "./Filtre";
+import LegendaStiluri from "./LegendaStiluri";
 import LocCard from "./LocCard";
 import LocModal from "./LocModal";
 
@@ -69,6 +70,12 @@ export default function Explorator({
     [locuriDeBaza, tip, stil, doarNerenovate, traseu],
   );
 
+  /* Legenda arata doar stilurile chiar prezente pe harta in acest moment. */
+  const stiluriVizibile = useMemo(
+    () => [...new Set(locuriFiltrate.map((l) => l.stil).filter((s): s is Stil => s !== null))],
+    [locuriFiltrate],
+  );
+
   return (
     <div className="flex h-full w-full flex-col">
       {traseu ? (
@@ -95,6 +102,10 @@ export default function Explorator({
           onNerenovate={() => setDoarNerenovate((v) => !v)}
         />
       )}
+      <LegendaStiluri
+        stiluri={stiluriVizibile}
+        areFaraStil={locuriFiltrate.some((l) => l.stil === null)}
+      />
       <div className="flex min-h-0 flex-1">
         <div className="min-w-0 flex-1">
           <Harta locuri={locuriFiltrate} onSelect={setActivLoc} />
