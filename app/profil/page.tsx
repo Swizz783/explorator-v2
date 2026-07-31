@@ -6,9 +6,12 @@ import { calculeazaAchievements } from "../lib/achievements";
 import { getLocuri } from "../lib/locatii";
 import { createClient } from "../lib/supabase/server";
 import { getVizitatePentruUser } from "../lib/vizitat";
+import { NEINDEXABIL } from "../lib/seo";
 
+/* Continut personal, per cont — nu are ce cauta in rezultatele de cautare. */
 export const metadata: Metadata = {
   title: "Profil · BucQuest",
+  ...NEINDEXABIL,
 };
 
 export default async function ProfilPage() {

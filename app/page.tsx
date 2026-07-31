@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import ArticolCard from "./components/ArticolCard";
 import { CULOARE_STIL, CULOARE_TIP, type Stil } from "./data/locuri";
@@ -5,6 +6,14 @@ import { ICOANA_TIP } from "./data/iconite";
 import { TRASEE } from "./data/trasee";
 import { getUltimeleArticole, type Articol } from "./lib/articole";
 import { getLocuri } from "./lib/locatii";
+import { paginaMetadata } from "./lib/seo";
+
+export const metadata: Metadata = paginaMetadata({
+  title: "BucQuest — Discover Bucharest",
+  description:
+    "Descoperă patrimoniul și locurile ascunse ale Bucureștiului. Hartă interactivă cu filtre pe tip și stil arhitectural, trasee ghidate, articole și galerie foto.",
+  path: "/",
+});
 
 export default async function Home() {
   const locuri = await getLocuri();

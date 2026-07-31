@@ -10,6 +10,7 @@ import NavLinks from "./components/NavLinks";
 import ProgressBar from "./components/ProgressBar";
 import { getLocuri } from "./lib/locatii";
 import { createClient } from "./lib/supabase/server";
+import { SITE_URL } from "./lib/seo";
 import { getVizitatePentruUser } from "./lib/vizitat";
 import { VisitedProvider } from "./store/VisitedContext";
 
@@ -24,9 +25,14 @@ const inter = Inter({
   subsets: ["latin", "latin-ext"],
 });
 
+/* Metadata generica de brand — fallback pentru orice pagina fara metadata proprie.
+   Fiecare pagina reala (inclusiv homepage-ul, in app/page.tsx) isi seteaza propria
+   metadata prin `paginaMetadata()`, cu canonical/Open Graph specifice rutei ei. */
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "BucQuest — Discover Bucharest",
-  description: "BucQuest — Discover Bucharest",
+  description:
+    "Descoperă patrimoniul arhitectural al Bucureștiului: palate, biserici, brutalism și locuri ascunse. Hartă interactivă, trasee ghidate și articole.",
 };
 
 export default async function RootLayout({

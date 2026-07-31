@@ -1,10 +1,14 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import { CREDITE } from "../data/credite";
+import { paginaMetadata } from "../lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = paginaMetadata({
   title: "Credite foto · BucQuest",
-};
+  description:
+    "Atribuirile complete pentru fotografiile folosite în BucQuest — autori, licențe și surse, pentru fiecare imagine din arhivă sau de pe Wikimedia Commons.",
+  path: "/credite",
+});
 
 /* Continut portat identic din proiectul vechi (sectiunea #credite / buildCredite()).
    Sursa originala: Explorator_Bucuresti_credite_poze.xlsx -> credite_data.js — toate

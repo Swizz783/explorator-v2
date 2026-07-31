@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import { getArticolById } from "../../lib/articole";
+import { paginaMetadata } from "../../lib/seo";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-async function incarcaArticol(id: string) {
+/* cache() dedubleaza apelul catre Supabase — generateMetadata si pagina
+   cer amandoua acelasi articol, in acelasi request. */
+const incarcaArticol = cache(async (id: string) => {
   const idNum = Number(id);
   if (!Number.isInteger(idNum)) return null;
   try {
@@ -15,14 +19,22 @@ async function incarcaArticol(id: string) {
   } catch {
     return null;
   }
-}
+});
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const articol = await incarcaArticol(id);
-  return {
-    title: articol ? `${articol.titlu} · BucQuest` : "Articol negăsit · BucQuest",
-  };
+
+  if (!articol) {
+    return { title: "Articol negăsit · BucQuest" };
+  }
+
+  return paginaMetadata({
+    title: `${articol.titlu} · BucQuest`,
+    description: articol.rezumat,
+    path: `/blog/${id}`,
+    imagine: articol.pozaUrl ?? undefined,
+  });
 }
 
 export default async function ArticolPage({ params }: Props) {

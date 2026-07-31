@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import AuthForm from "../components/AuthForm";
 import { createClient } from "../lib/supabase/server";
+import { NEINDEXABIL } from "../lib/seo";
 
+/* Formular de login/inregistrare — nu are ce cauta in rezultatele de cautare. */
 export const metadata: Metadata = {
   title: "Autentificare · BucQuest",
+  ...NEINDEXABIL,
 };
 
 type Props = {

@@ -1,7 +1,16 @@
+import type { Metadata } from "next";
 import type { Stil, Tip } from "../data/locuri";
 import Explorator from "../components/Explorator";
 import { TRASEE } from "../data/trasee";
 import { getLocuri } from "../lib/locatii";
+import { paginaMetadata } from "../lib/seo";
+
+export const metadata: Metadata = paginaMetadata({
+  title: "Harta interactivă · BucQuest",
+  description:
+    "Harta interactivă a Bucureștiului — filtrează locurile după tip și stil arhitectural, citește povestea fiecărei clădiri și bifează-le pe cele vizitate.",
+  path: "/harta",
+});
 
 type Props = {
   searchParams: Promise<{ tip?: string; stil?: string; traseu?: string }>;

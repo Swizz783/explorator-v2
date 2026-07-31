@@ -1,9 +1,13 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { paginaMetadata } from "../lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = paginaMetadata({
   title: "Despre · BucQuest",
-};
+  description:
+    "Un ghid de arhitectură urbană al Bucureștiului: palate Belle Époque, beton brutalist, art deco interbelic și biserici ascunse — poveștile din spatele fațadelor.",
+  path: "/despre",
+});
 
 /* Continut portat identic din proiectul vechi (explorator_bucuresti_4.html, sectiunea #despre). */
 export default function DesprePage() {

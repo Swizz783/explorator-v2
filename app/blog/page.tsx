@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import ArticolCard from "../components/ArticolCard";
 import { getArticole } from "../lib/articole";
+import { paginaMetadata } from "../lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = paginaMetadata({
   title: "Blog · BucQuest",
-};
+  description:
+    "Articole despre arhitectura și istoria Bucureștiului — povești din spatele clădirilor, cartierelor și stilurilor care compun orașul.",
+  path: "/blog",
+});
 
 export default async function BlogPage() {
   let articole: Awaited<ReturnType<typeof getArticole>> = [];
