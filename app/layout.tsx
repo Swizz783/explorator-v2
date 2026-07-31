@@ -33,6 +33,9 @@ export const metadata: Metadata = {
   title: "BucQuest — Discover Bucharest",
   description:
     "Descoperă patrimoniul arhitectural al Bucureștiului: palate, biserici, brutalism și locuri ascunse. Hartă interactivă, trasee ghidate și articole.",
+  verification: {
+    google: "GQhVjZ9Uo32wzdhHj1Oh7wF2Aq_0nusnkzVWznQHVjo",
+  },
 };
 
 export default async function RootLayout({
