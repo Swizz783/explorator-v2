@@ -86,7 +86,7 @@ export default function Explorator({
               {traseu.durata} · {locuriFiltrate.length} locuri
             </span>
           </div>
-          <Link href="/harta" className="text-[12.5px] font-medium text-enamel">
+          <Link href="/harta" className="text-[12.5px] font-medium text-brand">
             Ieși din traseu
           </Link>
         </div>

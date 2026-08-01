@@ -33,7 +33,7 @@ function Chip({
     <button
       onClick={onClick}
       className={`flex flex-none items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-[5px] text-[12.5px] font-medium transition ${
-        activ ? activCls : "border-line bg-card text-ink-soft hover:border-enamel"
+        activ ? activCls : "border-line bg-card text-ink-soft hover:border-brand"
       }`}
     >
       {children}

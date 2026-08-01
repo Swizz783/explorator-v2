@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { getContactSocial, type ContactSocial } from "../lib/contactSocial";
+import LogoMark from "./LogoMark";
 
 function InstagramIcon() {
   return (
@@ -56,7 +57,7 @@ const LINKURI_NAVIGATIE = [
 ];
 
 /* Footer global, vizibil pe toate paginile — layout pe 3 coloane (brand, navigatie,
-   contact), stivuite pe mobil. Fundal midnight (mai inchis decat enamel-ul din header,
+   contact), stivuite pe mobil. Fundal midnight (mai inchis decat brand-ul din header,
    ca fundalul sa nu se confunde cu accentul de brand), text deschis pentru contrast. */
 export default async function Footer() {
   let social: ContactSocial = { instagramUrl: null, tiktokUrl: null };
@@ -71,9 +72,14 @@ export default async function Footer() {
       <div className="mx-auto grid w-full max-w-[1080px] grid-cols-1 gap-9 px-7 py-10 sm:grid-cols-3">
         {/* Brand */}
         <div>
-          <div className="flex flex-wrap items-baseline gap-x-2.5">
-            <span className="font-serif text-xl font-semibold text-plaster-2">BucQuest</span>
-            <span className="text-[12.5px] font-medium text-plaster-2/65">Discover Bucharest</span>
+          <div className="flex flex-wrap items-center gap-2.5">
+            <span className="flex h-8 w-8 flex-none items-center justify-center rounded-lg bg-brand">
+              <LogoMark color="var(--color-plaster-2)" className="h-5 w-auto" />
+            </span>
+            <div className="flex flex-wrap items-baseline gap-x-2.5">
+              <span className="font-serif text-xl font-semibold text-plaster-2">BucQuest</span>
+              <span className="text-[12.5px] font-medium text-plaster-2/65">Discover Bucharest</span>
+            </div>
           </div>
           <p className="mt-3 max-w-[32ch] text-[13px] leading-[1.6] text-plaster-2/65">
             Descoperă patrimoniul și locurile ascunse ale Bucureștiului.

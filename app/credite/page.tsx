@@ -75,7 +75,7 @@ export default function CreditePage() {
                       href={c.licentaUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-enamel"
+                      className="text-brand"
                     >
                       {c.licenta}
                     </a>
@@ -89,7 +89,7 @@ export default function CreditePage() {
                       href={c.sursaUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-enamel"
+                      className="text-brand"
                     >
                       Wikimedia Commons
                     </a>

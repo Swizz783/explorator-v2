@@ -16,7 +16,7 @@ export default function ArticolCard({ articol }: { articol: Articol }) {
   return (
     <Link
       href={`/blog/${articol.id}`}
-      className="block overflow-hidden rounded-[13px] border border-line bg-card transition hover:border-enamel hover:shadow-card"
+      className="block overflow-hidden rounded-[13px] border border-line bg-card transition hover:border-brand hover:shadow-card"
     >
       <div className="relative h-[150px]">
         {articol.pozaUrl ? (

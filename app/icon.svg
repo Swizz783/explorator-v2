@@ -1,0 +1,17 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Aceeasi monograma B+Q ca in app/components/LogoMark.tsx (vezi comentariile de acolo
+       pentru geometrie), scalata si centrata pe placuta verde de brand. Aici contra-formele
+       sunt pline cu verdele fundalului, nu decupate, pentru ca fundalul e mereu placuta. -->
+  <rect width="64" height="64" rx="14" fill="#1F3D33"/>
+  <g transform="translate(12.49 9.89) scale(0.421)">
+    <g fill="#F4F1EA">
+      <path d="M3 5H32C43.2 6 45 20 32.5 32.3C45 34.4 47 51 33 66H3V61.5H6.5V9.5H3Z"/>
+      <path d="M41.42 62.14A26 26 0 1 1 86.18 62.14L63.8 100Z"/>
+    </g>
+    <g fill="#1F3D33">
+      <path d="M14.5 10.5H30C37.5 12 38.5 27 30 29H14.5Z"/>
+      <path d="M14.5 35.5H31C40.5 37.5 42 58 31 60.5H14.5Z"/>
+      <circle cx="63.8" cy="47.5" r="17.5"/>
+    </g>
+  </g>
+</svg>

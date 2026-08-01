@@ -52,7 +52,7 @@ export default function AuthForm({ eroare, mesaj }: Props) {
           className={`flex-1 rounded-full border px-3 py-[7px] text-[12.5px] font-medium transition ${
             mod === "login"
               ? "border-ink bg-ink text-plaster-2"
-              : "border-line bg-card text-ink-soft hover:border-enamel"
+              : "border-line bg-card text-ink-soft hover:border-brand"
           }`}
         >
           Am deja cont
@@ -63,7 +63,7 @@ export default function AuthForm({ eroare, mesaj }: Props) {
           className={`flex-1 rounded-full border px-3 py-[7px] text-[12.5px] font-medium transition ${
             mod === "inregistrare"
               ? "border-ink bg-ink text-plaster-2"
-              : "border-line bg-card text-ink-soft hover:border-enamel"
+              : "border-line bg-card text-ink-soft hover:border-brand"
           }`}
         >
           Cont nou
@@ -93,7 +93,7 @@ export default function AuthForm({ eroare, mesaj }: Props) {
             name="email"
             required
             autoComplete="email"
-            className="w-full rounded-lg border border-line bg-plaster-2 px-3 py-2.5 text-sm text-ink placeholder:text-ink-soft focus:border-enamel focus:outline-none"
+            className="w-full rounded-lg border border-line bg-plaster-2 px-3 py-2.5 text-sm text-ink placeholder:text-ink-soft focus:border-brand focus:outline-none"
             placeholder="nume@exemplu.ro"
           />
         </label>
@@ -105,14 +105,14 @@ export default function AuthForm({ eroare, mesaj }: Props) {
             required
             minLength={6}
             autoComplete={mod === "login" ? "current-password" : "new-password"}
-            className="w-full rounded-lg border border-line bg-plaster-2 px-3 py-2.5 text-sm text-ink placeholder:text-ink-soft focus:border-enamel focus:outline-none"
+            className="w-full rounded-lg border border-line bg-plaster-2 px-3 py-2.5 text-sm text-ink placeholder:text-ink-soft focus:border-brand focus:outline-none"
             placeholder="minimum 6 caractere"
           />
         </label>
 
         <button
           type="submit"
-          className="mt-1.5 inline-flex w-full items-center justify-center rounded-[9px] bg-ink px-[22px] py-[13px] text-sm font-semibold text-plaster-2 transition hover:bg-enamel-deep"
+          className="mt-1.5 inline-flex w-full items-center justify-center rounded-[9px] bg-ink px-[22px] py-[13px] text-sm font-semibold text-plaster-2 transition hover:bg-brand-hover"
         >
           {mod === "login" ? "Intră în cont" : "Creează cont"}
         </button>
@@ -127,7 +127,7 @@ export default function AuthForm({ eroare, mesaj }: Props) {
       <form action={loginWithGoogle} className="mt-4">
         <button
           type="submit"
-          className="flex w-full items-center justify-center gap-2 rounded-[9px] border border-line bg-card px-[22px] py-[13px] text-sm font-semibold text-ink transition hover:border-enamel"
+          className="flex w-full items-center justify-center gap-2 rounded-[9px] border border-line bg-card px-[22px] py-[13px] text-sm font-semibold text-ink transition hover:border-brand"
         >
           <GoogleIcon />
           Continuă cu Google

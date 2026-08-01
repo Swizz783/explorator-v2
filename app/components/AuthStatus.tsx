@@ -12,7 +12,7 @@ export default function AuthStatus({ loggedIn }: Props) {
   return (
     <Link
       href="/autentificare"
-      className="whitespace-nowrap rounded-full border border-ink bg-ink px-3.5 py-[7px] text-xs font-medium text-plaster-2 transition hover:bg-enamel-deep hover:border-enamel-deep"
+      className="whitespace-nowrap rounded-full border border-ink bg-ink px-3.5 py-[7px] text-xs font-medium text-plaster-2 transition hover:bg-brand-hover hover:border-brand-hover"
     >
       Autentificare
     </Link>

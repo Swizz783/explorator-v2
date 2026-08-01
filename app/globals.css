@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
-/* Identitatea vizuala preluata din proiectul vechi (explorator_bucuresti_4.html):
-   albastru de firma stradala (enamel) + tonuri de calcar (plaster). */
+/* Identitatea vizuala: verde principal de brand (BucQuest) + tonuri de calcar (plaster).
+   Verdele a inlocuit albastrul initial de firma stradala — fundalul crem/calcar
+   nu s-a schimbat. */
 @theme inline {
   /* calcar / limestone — fundaluri */
   --color-plaster: #e9e5db;
@@ -15,20 +16,23 @@
   /* contururi */
   --color-line: #d9d3c6;
 
-  /* albastru de firma stradala bucuresteana */
-  --color-enamel: #164a7a;
-  --color-enamel-deep: #0f3457;
+  /* verde de brand — principal (logo, butoane, linkuri) + hover (mai deschis, nu mai inchis) */
+  --color-brand: #1f3d33;
+  --color-brand-hover: #335c4a;
 
-  /* aproape negru, cu subton albastru — fundalul footer-ului, mai inchis decat enamel */
-  --color-midnight: #0d1b2a;
+  /* aproape negru, cu subton verde — fundalul footer-ului. Mai inchis decat brand-ul,
+     ca sa nu se confunde cu accentul, dar din aceeasi familie de nuanta (fostul
+     #0d1b2a avea subton albastru si ramanea vizibil albastru dupa rebranding). */
+  --color-midnight: #0f1f1a;
 
-  /* accente */
+  /* accente — neschimbate: brass (auriu) marcheaza "Nerenovat" si achievement-uri,
+     separat de sistemul de culori pe tip/stil al locatiilor */
   --color-verdigris: #3f7d6c;
   --color-brass: #a8823f;
 
   /* fonturi (variabilele vin din next/font, in app/layout.tsx) */
   --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
 
   --shadow-card: 0 10px 30px rgba(33, 30, 24, 0.12);
 }
@@ -69,10 +73,11 @@
     transform: scale(1.18);
   }
 
-  /* placuta emailata, motivul firmelor stradale din Bucuresti */
+  /* eticheta-insigna, folosita pentru numele locurilor in modal/lightbox
+     (logo-ul din header/footer are propriul component, LogoMark) */
   .plaque {
     display: inline-block;
-    background: var(--color-enamel);
+    background: var(--color-brand);
     color: #f2f0ea;
     border-radius: 7px;
     padding: 7px 14px;
@@ -81,7 +86,14 @@
     letter-spacing: 0.01em;
     box-shadow:
       inset 0 0 0 2px rgba(255, 255, 255, 0.16),
-      inset 0 0 0 4px var(--color-enamel),
+      inset 0 0 0 4px var(--color-brand),
       0 1px 0 rgba(0, 0, 0, 0.15);
   }
+}
+
+/* Atributia Leaflet/OSM isi aduce propriul albastru de link (.leaflet-container a
+   are color:#0078a8). Regula sta intentionat in afara oricarui @layer: CSS-ul
+   nelayerat al lui Leaflet ar bate orice regula pusa intr-un layer. */
+.leaflet-container .leaflet-control-attribution a {
+  color: var(--color-brand);
 }

@@ -65,7 +65,7 @@ export default function DesprePage() {
 
       <Link
         href="/harta"
-        className="mt-6 inline-flex items-center rounded-[9px] bg-ink px-[22px] py-[13px] text-sm font-semibold text-plaster-2 transition hover:bg-enamel-deep"
+        className="mt-6 inline-flex items-center rounded-[9px] bg-ink px-[22px] py-[13px] text-sm font-semibold text-plaster-2 transition hover:bg-brand-hover"
       >
         Descoperă harta &rarr;
       </Link>
@@ -74,7 +74,7 @@ export default function DesprePage() {
         Fotografiile din aplicație sunt fie făcute de mine, fie preluate de pe
         Wikimedia Commons — lista completă a autorilor și licențelor e în
         secțiunea de{" "}
-        <Link href="/credite" className="text-enamel">
+        <Link href="/credite" className="text-brand">
           credite foto
         </Link>
         .

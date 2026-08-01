@@ -47,7 +47,7 @@ export default async function Home() {
         <div className="mt-7 flex flex-wrap gap-3">
           <Link
             href="/harta"
-            className="inline-flex items-center rounded-[9px] bg-ink px-[22px] py-[13px] text-sm font-semibold text-plaster-2 transition hover:bg-enamel-deep"
+            className="inline-flex items-center rounded-[9px] bg-ink px-[22px] py-[13px] text-sm font-semibold text-plaster-2 transition hover:bg-brand-hover"
           >
             Descoperă harta &rarr;
           </Link>
@@ -70,7 +70,7 @@ export default async function Home() {
       <section className="mt-10">
         <div className="flex items-baseline justify-between gap-4">
           <h2 className="text-2xl font-semibold">Ultimele articole</h2>
-          <Link href="/blog" className="whitespace-nowrap text-sm font-medium text-enamel">
+          <Link href="/blog" className="whitespace-nowrap text-sm font-medium text-brand">
             Toate articolele &rarr;
           </Link>
         </div>
@@ -93,7 +93,7 @@ export default async function Home() {
             <Link
               key={t.id}
               href={`/harta?traseu=${t.id}`}
-              className="flex flex-col rounded-[13px] border border-line bg-card p-4 transition hover:border-enamel hover:shadow-card"
+              className="flex flex-col rounded-[13px] border border-line bg-card p-4 transition hover:border-brand hover:shadow-card"
             >
               <h3 className="text-[15px] font-semibold">{t.nume}</h3>
               <div className="mt-1 text-[12px] font-medium text-ink-soft">
@@ -125,7 +125,7 @@ export default async function Home() {
               <Link
                 key={`tip-${t}`}
                 href={`/harta?tip=${encodeURIComponent(t)}`}
-                className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-[13.5px] font-medium text-ink transition hover:-translate-y-0.5 hover:border-enamel hover:text-enamel"
+                className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-[13.5px] font-medium text-ink transition hover:-translate-y-0.5 hover:border-brand hover:text-brand"
               >
                 {Iconita && (
                   <Iconita size={15} strokeWidth={2} style={{ color: CULOARE_TIP[t] }} aria-hidden="true" />
@@ -138,7 +138,7 @@ export default async function Home() {
             <Link
               key={`stil-${s}`}
               href={`/harta?stil=${encodeURIComponent(s)}`}
-              className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-[13.5px] font-medium text-ink transition hover:-translate-y-0.5 hover:border-enamel hover:text-enamel"
+              className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-[13.5px] font-medium text-ink transition hover:-translate-y-0.5 hover:border-brand hover:text-brand"
             >
               <span
                 className="h-[9px] w-[9px] rounded-full"

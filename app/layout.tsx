@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import AuthStatus from "./components/AuthStatus";
 import Footer from "./components/Footer";
 import FooterGate from "./components/FooterGate";
+import LogoMark from "./components/LogoMark";
 import MainArea from "./components/MainArea";
 import NavLinks from "./components/NavLinks";
 import ProgressBar from "./components/ProgressBar";
@@ -14,10 +15,10 @@ import { SITE_URL } from "./lib/seo";
 import { getVizitatePentruUser } from "./lib/vizitat";
 import { VisitedProvider } from "./store/VisitedContext";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin", "latin-ext"],
-  axes: ["opsz"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const inter = Inter({
@@ -54,7 +55,7 @@ export default async function RootLayout({
   return (
     <html
       lang="ro"
-      className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
+      className={`${playfair.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="flex h-full flex-col bg-plaster text-ink font-sans">
         <VisitedProvider
@@ -65,8 +66,11 @@ export default async function RootLayout({
         >
           <header className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 border-b border-line px-7 py-4">
             <div className="flex items-center gap-4 justify-self-start">
-              <Link href="/" className="plaque text-[15px]">
-                BucQuest
+              <Link href="/" className="flex items-center gap-2.5">
+                <LogoMark color="var(--color-brand)" className="h-8 w-auto" />
+                <span className="font-serif text-[19px] font-semibold text-ink">
+                  BucQuest
+                </span>
               </Link>
               <span className="hidden text-xs text-ink-soft sm:inline">
                 Discover Bucharest

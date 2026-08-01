@@ -100,7 +100,7 @@ export default async function ProfilPage() {
       <form action={logout} className="mt-9 border-t border-line pt-6">
         <button
           type="submit"
-          className="rounded-[9px] border border-line bg-card px-[22px] py-[13px] text-sm font-semibold text-ink-soft transition hover:border-enamel hover:text-ink"
+          className="rounded-[9px] border border-line bg-card px-[22px] py-[13px] text-sm font-semibold text-ink-soft transition hover:border-brand hover:text-ink"
         >
           Delogare
         </button>

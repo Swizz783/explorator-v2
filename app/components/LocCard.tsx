@@ -34,8 +34,8 @@ export default function LocCard({ loc, activ, onClick }: Props) {
       onClick={onClick}
       className={`mb-3 cursor-pointer overflow-hidden rounded-[13px] border bg-card transition ${
         activ
-          ? "border-enamel shadow-card"
-          : "border-line hover:border-enamel hover:shadow-card"
+          ? "border-brand shadow-card"
+          : "border-line hover:border-brand hover:shadow-card"
       }`}
     >
       <div className="relative h-[120px]">

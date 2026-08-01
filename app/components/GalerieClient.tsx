@@ -40,7 +40,7 @@ export default function GalerieClient({ poze }: Props) {
             className={`flex-none whitespace-nowrap rounded-full border px-3.5 py-[6px] text-[13px] font-medium transition ${
               activa === c
                 ? "border-ink bg-ink text-plaster-2"
-                : "border-line bg-card text-ink-soft hover:border-enamel"
+                : "border-line bg-card text-ink-soft hover:border-brand"
             }`}
           >
             {c}
@@ -53,7 +53,7 @@ export default function GalerieClient({ poze }: Props) {
           <button
             key={p.id}
             onClick={() => setDeschisa(p)}
-            className="group overflow-hidden rounded-[13px] border border-line bg-card text-left transition hover:border-enamel hover:shadow-card"
+            className="group overflow-hidden rounded-[13px] border border-line bg-card text-left transition hover:border-brand hover:shadow-card"
           >
             <div className="relative h-[140px] overflow-hidden bg-plaster-2">
               {/* eslint-disable-next-line @next/next/no-img-element -- poza vine din Supabase Storage, nu din /public */}
