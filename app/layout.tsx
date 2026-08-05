@@ -68,7 +68,7 @@ export default async function RootLayout({
             <div className="flex items-center gap-4 justify-self-start">
               <Link href="/" className="flex items-center gap-2.5">
                 <LogoMark color="var(--color-brand)" className="h-8 w-auto" />
-                <span className="font-serif text-[19px] font-semibold text-ink">
+                <span className="font-serif text-[19px] font-semibold text-brand">
                   BucQuest
                 </span>
               </Link>

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ArticolCard from "./components/ArticolCard";
+import HartaPreview from "./components/HartaPreview";
+import LogoMark from "./components/LogoMark";
 import { CULOARE_STIL, CULOARE_TIP, type Stil } from "./data/locuri";
 import { ICOANA_TIP } from "./data/iconite";
 import { TRASEE } from "./data/trasee";
@@ -32,22 +34,35 @@ export default async function Home() {
     <div className="mx-auto w-full max-w-[1080px] px-7 pb-16">
       {/* ---------- HERO ---------- */}
       <div className="py-10">
-        <div className="text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-soft">
+        <div className="hero-in text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-soft">
           Ghid de arhitectură urbană · București
         </div>
-        <h1 className="mt-4 flex flex-wrap items-baseline gap-x-3 text-[clamp(38px,6vw,74px)] font-semibold leading-[1.02] tracking-[-0.015em]">
-          <span>BucQuest</span>
-          <span className="text-[clamp(14px,2vw,20px)] font-medium text-ink-soft">
+        <h1 className="hero-in mt-4 flex flex-wrap items-baseline gap-x-3 text-[clamp(38px,6vw,74px)] font-semibold leading-[1.02] tracking-[-0.015em] pb-[0.18em] [animation-delay:90ms]">
+          {/* Marca e dimensionata in `em`, deci urmareste singura clamp-ul titlului.
+              1.233em e ales ca "B"-ul din monograma sa aiba exact cap-height-ul lui
+              Playfair (0.716em) — B-ul din marca si cel din "BucQuest" ies identice.
+              Aliniat la baseline, un SVG isi pune marginea de jos pe linia de baza,
+              iar translate-ul il coboara pana cand baseline-ul monogramei cade pe cel
+              al textului; varful pinului ramane atarnat dedesubt, ca un descendent. */}
+          <LogoMark
+            color="var(--color-brand)"
+            className="h-[1.233em] w-auto flex-none translate-y-[0.458em]"
+          />
+          <span className="text-brand">BucQuest</span>
+          <span className="text-[clamp(14px,2vw,20px)] font-medium text-brand-hover">
             Discover Bucharest
           </span>
         </h1>
-        <p className="mt-5 max-w-[52ch] text-[clamp(15px,1.8vw,18px)] leading-[1.6] text-ink-soft">
+        <p className="hero-in mt-5 max-w-[52ch] text-[clamp(15px,1.8vw,18px)] leading-[1.6] text-ink-soft [animation-delay:180ms]">
           Descoperă patrimoniul și locurile ascunse ale Bucureștiului.
         </p>
-        <div className="mt-7 flex flex-wrap gap-3">
+        <div className="hero-in mt-7 [animation-delay:270ms]">
+          <HartaPreview locuri={locuri} />
+        </div>
+        <div className="hero-in mt-7 flex flex-wrap gap-3 [animation-delay:360ms]">
           <Link
             href="/harta"
-            className="inline-flex items-center rounded-[9px] bg-ink px-[22px] py-[13px] text-sm font-semibold text-plaster-2 transition hover:bg-brand-hover"
+            className="inline-flex items-center rounded-[9px] bg-brand px-[22px] py-[13px] text-sm font-semibold text-plaster-2 transition hover:bg-brand-hover"
           >
             Descoperă harta &rarr;
           </Link>
@@ -58,7 +73,7 @@ export default async function Home() {
             Vezi categoriile
           </a>
         </div>
-        <div className="mt-6 text-[13px] text-ink-soft">
+        <div className="hero-in mt-6 text-[13px] text-ink-soft [animation-delay:450ms]">
           <b className="mr-1 font-serif text-[20px] font-semibold text-ink">{locuri.length}</b>
           locuri &nbsp;·&nbsp;
           <b className="mx-1 font-serif text-[20px] font-semibold text-ink">{stiluri.length}</b>

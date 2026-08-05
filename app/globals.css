@@ -57,7 +57,33 @@
   }
 }
 
+/* intrarea in cascada a hero-ului de pe homepage */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @layer components {
+  /* Un element din cascada hero-ului. Intarzierea se pune la folosire, cu
+     [animation-delay:...]. `backwards` tine elementul la starea `from` cat timp
+     asteapta intarzierea — fara el ar clipi vizibil inainte sa porneasca. */
+  .hero-in {
+    animation: hero-in 0.62s cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+  }
+
+  /* fara animatie pentru cine a cerut mai putina miscare; continutul ramane vizibil */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-in {
+      animation: none;
+    }
+  }
+
   /* pinurile de pe harta (Leaflet divIcon) — umbra + crestere la hover */
   .pin {
     background: none;
@@ -96,4 +122,17 @@
    nelayerat al lui Leaflet ar bate orice regula pusa intr-un layer. */
 .leaflet-container .leaflet-control-attribution a {
   color: var(--color-brand);
+}
+
+/* Preview-ul static de harta (HartaPreview). Optiunile Leaflet sunt deja oprite;
+   asta taie si ce ramane pe DOM — hover-ul de pe pinuri si cursorul de "apuca".
+   Tinta e `.leaflet-pane` (dale, pinuri), NU containerul: controalele sunt in
+   `.leaflet-control-container`, fratele panourilor, deci atributia ramane
+   clicabila. Nelayerat, ca sa bata CSS-ul nelayerat al lui Leaflet. */
+.harta-statica .leaflet-pane {
+  pointer-events: none;
+}
+
+.harta-statica .leaflet-container {
+  cursor: default;
 }
