@@ -3,13 +3,17 @@ import { supabase } from "./supabase";
 export type ContactSocial = {
   instagramUrl: string | null;
   tiktokUrl: string | null;
+  facebookUrl: string | null;
 };
 
-/* Randul unic din `contact_social` — un URL gol/null e tratat identic (dezactivat). */
+/* Randul unic din `contact_social` — un URL gol/null e tratat identic (dezactivat).
+   `select("*")` in loc de lista de coloane: daca o coloana noua inca nu exista in
+   Supabase (codul e pe productie inainte sa fie rulat SQL-ul), o lista explicita ar
+   intoarce eroare si ar pica TOATE iconitele. Asa, doar cea lipsa iese null. */
 export async function getContactSocial(): Promise<ContactSocial> {
   const { data, error } = await supabase
     .from("contact_social")
-    .select("instagram_url, tiktok_url")
+    .select("*")
     .limit(1)
     .maybeSingle();
 
@@ -20,5 +24,6 @@ export async function getContactSocial(): Promise<ContactSocial> {
   return {
     instagramUrl: data?.instagram_url || null,
     tiktokUrl: data?.tiktok_url || null,
+    facebookUrl: data?.facebook_url || null,
   };
 }

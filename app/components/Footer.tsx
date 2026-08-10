@@ -21,6 +21,24 @@ function TikTokIcon() {
   );
 }
 
+/* Acelasi tratament de contur ca iconita de Instagram (1.8px, currentColor);
+   colturile lui "f" cer imbinare rotunda, altfel ies varfuri ascutite la 17px. */
+function FacebookIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="17"
+      height="17"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinejoin="round"
+    >
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  );
+}
+
 /* Iconita de social: link activ daca avem URL, altfel span dezactivat (gri, fara href) —
    ca sa nu fie niciodata un link mort cand cineva uita sa completeze URL-ul in Supabase. */
 function IconLink({ href, label, children }: { href: string | null; label: string; children: ReactNode }) {
@@ -60,16 +78,16 @@ const LINKURI_NAVIGATIE = [
    contact), stivuite pe mobil. Fundal midnight (mai inchis decat brand-ul din header,
    ca fundalul sa nu se confunde cu accentul de brand), text deschis pentru contrast. */
 export default async function Footer() {
-  let social: ContactSocial = { instagramUrl: null, tiktokUrl: null };
+  let social: ContactSocial = { instagramUrl: null, tiktokUrl: null, facebookUrl: null };
   try {
     social = await getContactSocial();
   } catch {
-    social = { instagramUrl: null, tiktokUrl: null };
+    social = { instagramUrl: null, tiktokUrl: null, facebookUrl: null };
   }
 
   return (
     <footer className="bg-midnight text-plaster-2">
-      <div className="mx-auto grid w-full max-w-[1080px] grid-cols-1 gap-9 px-7 py-10 sm:grid-cols-3">
+      <div className="mx-auto grid w-full max-w-[1080px] grid-cols-1 gap-8 px-4 py-8 sm:grid-cols-3 sm:gap-9 sm:px-7 sm:py-10">
         {/* Brand */}
         <div>
           <div className="flex flex-wrap items-center gap-2.5">
@@ -126,6 +144,9 @@ export default async function Footer() {
             </IconLink>
             <IconLink href={social.tiktokUrl} label="TikTok">
               <TikTokIcon />
+            </IconLink>
+            <IconLink href={social.facebookUrl} label="Facebook">
+              <FacebookIcon />
             </IconLink>
           </div>
         </div>

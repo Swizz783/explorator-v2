@@ -53,8 +53,10 @@ export default function LocModal({ loc, onClose }: Props) {
           if (e.target === e.currentTarget) onClose();
         }}
       >
-        <div className="animate-[pop_.18s_ease] max-h-[90vh] w-[min(760px,100%)] overflow-y-auto rounded-2xl bg-plaster shadow-card">
-          <div className="relative h-[300px] overflow-hidden bg-plaster-2">
+        {/* `dvh`, nu `vh`: pe mobil `90vh` se masoara fata de viewport-ul fara bara
+            de adrese, deci modalul iesea sub ea. */}
+        <div className="animate-[pop_.18s_ease] max-h-[90dvh] w-[min(760px,100%)] overflow-y-auto rounded-2xl bg-plaster shadow-card">
+          <div className="relative h-[210px] overflow-hidden bg-plaster-2 sm:h-[300px]">
             {poze.length === 0 && <Placeholder label={loc.tip} />}
             {poze.map((poza, i) => (
               <div
@@ -70,7 +72,7 @@ export default function LocModal({ loc, onClose }: Props) {
                     src={`/images/${poza}`}
                     alt={`${loc.nume} — poza ${i + 1}`}
                     fill
-                    sizes="760px"
+                    sizes="(max-width: 768px) 100vw, 760px"
                     className="object-cover"
                     priority={i === 0}
                   />
@@ -115,8 +117,8 @@ export default function LocModal({ loc, onClose }: Props) {
               &times;
             </button>
           </div>
-          <div className="p-[22px] pb-7 sm:px-[26px]">
-            <div className="plaque mb-3.5 text-[22px]">{loc.nume}</div>
+          <div className="p-4 pb-6 sm:p-[22px] sm:px-[26px] sm:pb-7">
+            <div className="plaque mb-3.5 text-[18px] sm:text-[22px]">{loc.nume}</div>
             <Tags loc={loc} />
             {meta && (
               <div className="mb-4 mt-0.5 text-[13px] text-ink-soft">{meta}</div>

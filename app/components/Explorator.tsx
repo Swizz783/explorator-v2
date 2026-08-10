@@ -106,11 +106,15 @@ export default function Explorator({
         stiluri={stiluriVizibile}
         areFaraStil={locuriFiltrate.some((l) => l.stil === null)}
       />
-      <div className="flex min-h-0 flex-1">
-        <div className="min-w-0 flex-1">
+      {/* Sub `md` harta si lista se stivuiesc: harta sus, pe majoritatea ecranului,
+          lista dedesubt cu scroll propriu. Inaltimea hartii e in `dvh`, nu `vh`, ca
+          sa urmareasca bara de adrese a browserului mobil (cu `vh` harta ar fi
+          taiata de bara). De la `md` in sus revin una langa alta, ca inainte. */}
+      <div className="flex min-h-0 flex-1 flex-col md:flex-row">
+        <div className="h-[55dvh] min-w-0 flex-none md:h-auto md:flex-1">
           <Harta locuri={locuriFiltrate} onSelect={setActivLoc} />
         </div>
-        <div className="w-[400px] max-w-[44vw] scroll-smooth overflow-y-auto border-l border-line bg-plaster p-3.5">
+        <div className="min-h-0 flex-1 scroll-smooth overflow-y-auto border-t border-line bg-plaster p-3.5 md:w-[400px] md:max-w-[44vw] md:flex-initial md:border-l md:border-t-0">
           <div className="mb-3 px-1 text-xs text-ink-soft">
             {locuriFiltrate.length} locuri afișate
           </div>

@@ -60,7 +60,9 @@ export default function Filtre({
   onNerenovate,
 }: Props) {
   return (
-    <div className="border-b border-line bg-plaster-2 px-4 py-2.5">
+    /* Pe mobil inaltimea e resursa rara (harta + lista impart un ecran fix), deci
+       spatierea verticala e mai stransa. Derularea orizontala ramane neschimbata. */
+    <div className="border-b border-line bg-plaster-2 px-4 py-1.5 sm:py-2.5">
       <div className="flex items-center gap-2 overflow-x-auto py-[3px]">
         <Eticheta>Stil</Eticheta>
         <Chip activ={stil === "toate"} onClick={() => onStil("toate")}>
@@ -77,7 +79,7 @@ export default function Filtre({
           </Chip>
         ))}
       </div>
-      <div className="mt-1.5 flex items-center gap-2 overflow-x-auto py-[3px]">
+      <div className="mt-1 flex items-center gap-2 overflow-x-auto py-[3px] sm:mt-1.5">
         <Eticheta>Tip</Eticheta>
         <Chip activ={tip === "toate"} onClick={() => onTip("toate")}>
           Toate

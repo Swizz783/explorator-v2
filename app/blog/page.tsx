@@ -19,11 +19,11 @@ export default async function BlogPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-[1080px] px-7 py-8 pb-16">
+    <div className="mx-auto w-full max-w-[1080px] px-4 py-7 pb-12 sm:px-7 sm:py-8 sm:pb-16">
       <div className="text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-soft">
         Blog
       </div>
-      <h2 className="mt-2 text-2xl font-semibold">Articole</h2>
+      <h2 className="mt-2 text-xl font-semibold sm:text-2xl">Articole</h2>
 
       {articole.length === 0 ? (
         <p className="mt-6 text-sm text-ink-soft">Momentan nu sunt articole publicate.</p>

@@ -10,7 +10,10 @@ export default function ProgressBar() {
   const pct = total ? Math.round((done / total) * 100) : 0;
 
   return (
-    <div className="hidden items-center gap-2.5 sm:flex">
+    /* Intre `md` si `lg` header-ul are deja navigatia completa plus butonul de
+       autentificare si nu mai incape si contorul — apare de la `lg` in sus. Sub `md`
+       nu dispare, ci se muta in meniul hamburger (vezi MeniuMobil). */
+    <div className="hidden items-center gap-2.5 lg:flex">
       <span className="whitespace-nowrap text-xs text-ink-soft">
         {done} / {total} vizitate
       </span>

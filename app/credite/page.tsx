@@ -15,11 +15,11 @@ export const metadata: Metadata = paginaMetadata({
    cele 72 de atribuiri, neomise si neprescurtate (informatie cu relevanta legala). */
 export default function CreditePage() {
   return (
-    <div className="mx-auto w-full max-w-[1080px] px-7 py-8 pb-16">
+    <div className="mx-auto w-full max-w-[1080px] px-4 py-7 pb-12 sm:px-7 sm:py-8 sm:pb-16">
       <div className="text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-soft">
         Atribuiri
       </div>
-      <h2 className="mt-2 text-2xl font-semibold">Credite foto</h2>
+      <h2 className="mt-2 text-xl font-semibold sm:text-2xl">Credite foto</h2>
 
       <p className="mt-4 max-w-[70ch] text-sm leading-[1.6] text-ink-soft">
         Fotografiile provin din arhiva proprie sau de pe Wikimedia Commons si

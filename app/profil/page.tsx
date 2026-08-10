@@ -40,11 +40,11 @@ export default async function ProfilPage() {
   const speciale = achievements.filter((a) => a.categorie === "special");
 
   return (
-    <div className="mx-auto w-full max-w-[880px] px-7 py-8 pb-16">
+    <div className="mx-auto w-full max-w-[880px] px-4 py-7 pb-12 sm:px-7 sm:py-8 sm:pb-16">
       <div className="text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-soft">
         Cont
       </div>
-      <h2 className="mt-2 text-2xl font-semibold">Profilul tău</h2>
+      <h2 className="mt-2 text-xl font-semibold sm:text-2xl">Profilul tău</h2>
       <p className="mt-2 text-sm text-ink-soft">{user.email}</p>
 
       <div className="mt-6 rounded-[13px] border border-line bg-card p-5">

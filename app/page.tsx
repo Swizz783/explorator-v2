@@ -31,10 +31,10 @@ export default async function Home() {
   const stiluri = [...new Set(locuri.map((l) => l.stil).filter((s): s is Stil => s !== null))];
 
   return (
-    <div className="mx-auto w-full max-w-[1080px] px-7 pb-16">
+    <div className="mx-auto w-full max-w-[1080px] px-4 pb-12 sm:px-7 sm:pb-16">
       {/* ---------- HERO ---------- */}
-      <div className="py-10">
-        <div className="hero-in text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-soft">
+      <div className="py-7 sm:py-10">
+        <div className="hero-in text-[10.5px] font-semibold uppercase tracking-[0.16em] text-ink-soft sm:text-[11.5px] sm:tracking-[0.18em]">
           Ghid de arhitectură urbană · București
         </div>
         <h1 className="hero-in mt-4 flex flex-wrap items-baseline gap-x-3 text-[clamp(38px,6vw,74px)] font-semibold leading-[1.02] tracking-[-0.015em] pb-[0.18em] [animation-delay:90ms]">
@@ -59,32 +59,38 @@ export default async function Home() {
         <div className="hero-in mt-7 [animation-delay:270ms]">
           <HartaPreview locuri={locuri} />
         </div>
-        <div className="hero-in mt-7 flex flex-wrap gap-3 [animation-delay:360ms]">
+        {/* Pe mobil butoanele se stivuiesc pe toata latimea; de la `sm` in sus revin
+            unul langa altul, ca inainte. */}
+        <div className="hero-in mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap [animation-delay:360ms]">
           <Link
             href="/harta"
-            className="inline-flex items-center rounded-[9px] bg-brand px-[22px] py-[13px] text-sm font-semibold text-plaster-2 transition hover:bg-brand-hover"
+            className="inline-flex w-full items-center justify-center rounded-[9px] bg-brand px-[22px] py-[13px] text-sm font-semibold text-plaster-2 transition hover:bg-brand-hover sm:w-auto sm:justify-start"
           >
             Descoperă harta &rarr;
           </Link>
           <a
             href="#categorii"
-            className="inline-flex items-center rounded-[9px] border border-line px-[22px] py-[13px] text-sm font-semibold text-ink transition hover:border-ink"
+            className="inline-flex w-full items-center justify-center rounded-[9px] border border-line px-[22px] py-[13px] text-sm font-semibold text-ink transition hover:border-ink sm:w-auto sm:justify-start"
           >
             Vezi categoriile
           </a>
         </div>
-        <div className="hero-in mt-6 text-[13px] text-ink-soft [animation-delay:450ms]">
-          <b className="mr-1 font-serif text-[20px] font-semibold text-ink">{locuri.length}</b>
+        <div className="hero-in mt-6 text-[12.5px] text-ink-soft sm:text-[13px] [animation-delay:450ms]">
+          <b className="mr-1 font-serif text-[18px] font-semibold text-ink sm:text-[20px]">
+            {locuri.length}
+          </b>
           locuri &nbsp;·&nbsp;
-          <b className="mx-1 font-serif text-[20px] font-semibold text-ink">{stiluri.length}</b>
+          <b className="mx-1 font-serif text-[18px] font-semibold text-ink sm:text-[20px]">
+            {stiluri.length}
+          </b>
           stiluri arhitecturale &nbsp;·&nbsp; centrul Bucureștiului
         </div>
       </div>
 
       {/* ---------- ULTIMELE ARTICOLE ---------- */}
-      <section className="mt-10">
-        <div className="flex items-baseline justify-between gap-4">
-          <h2 className="text-2xl font-semibold">Ultimele articole</h2>
+      <section className="mt-10 sm:mt-12">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <h2 className="text-xl font-semibold sm:text-2xl">Ultimele articole</h2>
           <Link href="/blog" className="whitespace-nowrap text-sm font-medium text-brand">
             Toate articolele &rarr;
           </Link>
@@ -92,7 +98,7 @@ export default async function Home() {
         {articole.length === 0 ? (
           <p className="mt-4 text-sm text-ink-soft">Momentan nu sunt articole publicate.</p>
         ) : (
-          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {articole.map((a) => (
               <ArticolCard key={a.id} articol={a} />
             ))}
@@ -101,8 +107,8 @@ export default async function Home() {
       </section>
 
       {/* ---------- TRASEE ---------- */}
-      <section className="mt-14">
-        <h2 className="text-2xl font-semibold">Trasee</h2>
+      <section className="mt-11 sm:mt-14">
+        <h2 className="text-xl font-semibold sm:text-2xl">Trasee</h2>
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {TRASEE.map((t) => (
             <Link
@@ -131,16 +137,16 @@ export default async function Home() {
       </section>
 
       {/* ---------- CATEGORII ---------- */}
-      <section id="categorii" className="mt-14 scroll-mt-6">
-        <h2 className="text-2xl font-semibold">Explorează pe categorii</h2>
-        <div className="mt-4 flex flex-wrap gap-2.5">
+      <section id="categorii" className="mt-11 scroll-mt-6 sm:mt-14">
+        <h2 className="text-xl font-semibold sm:text-2xl">Explorează pe categorii</h2>
+        <div className="mt-4 flex flex-wrap gap-2">
           {tipuri.map((t) => {
             const Iconita = ICOANA_TIP[t];
             return (
               <Link
                 key={`tip-${t}`}
                 href={`/harta?tip=${encodeURIComponent(t)}`}
-                className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-[13.5px] font-medium text-ink transition hover:-translate-y-0.5 hover:border-brand hover:text-brand"
+                className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-3 py-2 text-[13px] font-medium text-ink transition hover:-translate-y-0.5 hover:border-brand hover:text-brand sm:px-4 sm:text-[13.5px]"
               >
                 {Iconita && (
                   <Iconita size={15} strokeWidth={2} style={{ color: CULOARE_TIP[t] }} aria-hidden="true" />
@@ -153,7 +159,7 @@ export default async function Home() {
             <Link
               key={`stil-${s}`}
               href={`/harta?stil=${encodeURIComponent(s)}`}
-              className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-[13.5px] font-medium text-ink transition hover:-translate-y-0.5 hover:border-brand hover:text-brand"
+              className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-3 py-2 text-[13px] font-medium text-ink transition hover:-translate-y-0.5 hover:border-brand hover:text-brand sm:px-4 sm:text-[13.5px]"
             >
               <span
                 className="h-[9px] w-[9px] rounded-full"

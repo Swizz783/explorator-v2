@@ -12,11 +12,11 @@ export const metadata: Metadata = paginaMetadata({
 /* Continut portat identic din proiectul vechi (explorator_bucuresti_4.html, sectiunea #despre). */
 export default function DesprePage() {
   return (
-    <div className="mx-auto w-full max-w-[820px] px-7 py-8 pb-16">
+    <div className="mx-auto w-full max-w-[820px] px-4 py-7 pb-12 sm:px-7 sm:py-8 sm:pb-16">
       <div className="text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-soft">
         Despre proiect
       </div>
-      <h2 className="mt-2 text-2xl font-semibold">
+      <h2 className="mt-2 text-xl font-semibold sm:text-2xl">
         Un ghid de arhitectură al Bucureștiului
       </h2>
 

@@ -75,13 +75,13 @@ export default function GalerieClient({ poze }: Props) {
             if (e.target === e.currentTarget) setDeschisa(null);
           }}
         >
-          <div className="animate-[pop_.18s_ease] max-h-[90vh] w-[min(900px,100%)] overflow-hidden rounded-2xl bg-plaster shadow-card">
-            <div className="relative flex max-h-[70vh] items-center justify-center bg-[#14120e]">
+          <div className="animate-[pop_.18s_ease] max-h-[90dvh] w-[min(900px,100%)] overflow-hidden rounded-2xl bg-plaster shadow-card">
+            <div className="relative flex max-h-[70dvh] items-center justify-center bg-[#14120e]">
               {/* eslint-disable-next-line @next/next/no-img-element -- poza vine din Supabase Storage, nu din /public */}
               <img
                 src={deschisa.url}
                 alt={deschisa.nume}
-                className="max-h-[70vh] w-full object-contain"
+                className="max-h-[70dvh] w-full object-contain"
               />
               <button
                 aria-label="Închide"

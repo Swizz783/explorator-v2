@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import FooterGate from "./components/FooterGate";
 import LogoMark from "./components/LogoMark";
 import MainArea from "./components/MainArea";
+import MeniuMobil from "./components/MeniuMobil";
 import NavLinks from "./components/NavLinks";
 import ProgressBar from "./components/ProgressBar";
 import { getLocuri } from "./lib/locatii";
@@ -64,23 +65,26 @@ export default async function RootLayout({
           initialVisited={initialVisited}
           locuri={locuri}
         >
-          <header className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 border-b border-line px-7 py-4">
-            <div className="flex items-center gap-4 justify-self-start">
-              <Link href="/" className="flex items-center gap-2.5">
-                <LogoMark color="var(--color-brand)" className="h-8 w-auto" />
-                <span className="font-serif text-[19px] font-semibold text-brand">
+          {/* Sub `md`: logo in stanga, hamburger in dreapta (panoul lui se ancoreaza
+              pe `relative` de aici). De la `md` in sus, grila pe 3 coloane de dinainte. */}
+          <header className="relative flex items-center justify-between gap-4 border-b border-line px-4 py-3 md:grid md:grid-cols-[1fr_auto_1fr] md:px-7 md:py-4">
+            <div className="flex min-w-0 items-center gap-4 md:justify-self-start">
+              <Link href="/" className="flex min-w-0 items-center gap-2.5">
+                <LogoMark color="var(--color-brand)" className="h-7 w-auto flex-none md:h-8" />
+                <span className="truncate font-serif text-[17px] font-semibold text-brand md:text-[19px]">
                   BucQuest
                 </span>
               </Link>
-              <span className="hidden text-xs text-ink-soft sm:inline">
+              <span className="hidden text-xs text-ink-soft lg:inline">
                 Discover Bucharest
               </span>
             </div>
             <NavLinks />
-            <div className="flex items-center gap-4 justify-self-end">
+            <div className="hidden items-center gap-4 md:flex md:justify-self-end">
               <ProgressBar />
               <AuthStatus loggedIn={Boolean(user)} />
             </div>
+            <MeniuMobil loggedIn={Boolean(user)} />
           </header>
           <MainArea>{children}</MainArea>
           <FooterGate>

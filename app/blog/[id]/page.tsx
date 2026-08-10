@@ -50,7 +50,7 @@ export default async function ArticolPage({ params }: Props) {
   });
 
   return (
-    <div className="mx-auto w-full max-w-[760px] px-7 py-8 pb-16">
+    <div className="mx-auto w-full max-w-[760px] px-4 py-7 pb-12 sm:px-7 sm:py-8 sm:pb-16">
       <Link href="/blog" className="text-sm font-medium text-brand">
         ← Toate articolele
       </Link>

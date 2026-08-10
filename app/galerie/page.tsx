@@ -34,11 +34,11 @@ export default async function GaleriePage() {
   const poze = await incarcaPoze();
 
   return (
-    <div className="mx-auto w-full max-w-[1080px] px-7 py-8 pb-16">
+    <div className="mx-auto w-full max-w-[1080px] px-4 py-7 pb-12 sm:px-7 sm:py-8 sm:pb-16">
       <div className="text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-soft">
         Galerie
       </div>
-      <h2 className="mt-2 text-2xl font-semibold">Poze din București</h2>
+      <h2 className="mt-2 text-xl font-semibold sm:text-2xl">Poze din București</h2>
       <p className="mt-2 text-[13px] text-ink-soft">
         Fotografii realizate de creatorul site-ului.
       </p>
