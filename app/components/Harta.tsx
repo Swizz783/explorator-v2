@@ -3,7 +3,9 @@
 import L from "leaflet";
 import { useEffect, useMemo } from "react";
 import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-cluster";
 import "leaflet/dist/leaflet.css";
+import "leaflet.markercluster/dist/MarkerCluster.css";
 import { culoarePentruStil, type Loc } from "../data/locuri";
 import { ICONITA_PIN_SVG } from "../data/iconite-pin";
 
@@ -43,6 +45,25 @@ function pinIcon(loc: Loc) {
     iconSize: [30, 40],
     iconAnchor: [15, 39],
     tooltipAnchor: [0, -34],
+  });
+}
+
+/* Iconita unui cluster: cerc plin cu numarul de pinuri grupate, in stilul de
+   brand (nu galbenul implicit din leaflet.markercluster — de-asta nu importam
+   MarkerCluster.Default.css, doar CSS-ul structural din MarkerCluster.css).
+   Trei praguri de marime, ca un cluster de 30 sa para vizibil mai "plin" decat
+   unul de 3. Centrat pe coordonata (iconAnchor = centrul cercului), spre
+   deosebire de pinul individual, care e ancorat in varful picaturii. */
+function iconitaCluster(cluster: L.MarkerCluster) {
+  const nr = cluster.getChildCount();
+  const marime = nr < 10 ? 34 : nr < 25 ? 42 : 50;
+  const fontSize = nr < 10 ? 13 : nr < 25 ? 14.5 : 16;
+
+  return L.divIcon({
+    html: `<div class="cluster-pin" style="width:${marime}px;height:${marime}px;font-size:${fontSize}px">${nr}</div>`,
+    className: "cluster-pin-wrap",
+    iconSize: L.point(marime, marime),
+    iconAnchor: L.point(marime / 2, marime / 2),
   });
 }
 
@@ -125,18 +146,41 @@ export default function Harta({ locuri, onSelect, interactiv = true }: Props) {
         maxZoom={19}
       />
       {!interactiv && <ReincadrarePreview puncte={puncte} />}
-      {cuCoordonate.map((loc) => (
-        <Marker
-          key={loc.nume}
-          position={[loc.lat, loc.lng]}
-          icon={pinIcon(loc)}
-          interactive={interactiv}
-          riseOnHover={interactiv}
-          eventHandlers={
-            interactiv && onSelect ? { click: () => onSelect(loc) } : undefined
-          }
-        />
-      ))}
+      {/* Gruparea (clustering) e doar pe harta interactiva: pe /harta, pe mobil mai
+         ales, pinurile din centrul orasului stau prea inghesuite ca sa fie apasate
+         individual. Utilizatorul apasa un cerc cu un numar, harta face zoom si
+         clusterul se desface — la zoom maxim, `spiderfyOnMaxZoom` desface si
+         pinurile de pe aceleasi coordonate exacte, ca niciunul sa nu ramana
+         inaccesibil. Preview-ul de pe homepage ramane neschimbat: nu e interactiv,
+         deci n-are cum sa desfaci un cluster acolo — pinurile raman individuale. */}
+      {interactiv ? (
+        <MarkerClusterGroup
+          iconCreateFunction={iconitaCluster}
+          showCoverageOnHover={false}
+          spiderfyOnMaxZoom
+          maxClusterRadius={50}
+        >
+          {cuCoordonate.map((loc) => (
+            <Marker
+              key={loc.nume}
+              position={[loc.lat, loc.lng]}
+              icon={pinIcon(loc)}
+              riseOnHover
+              eventHandlers={onSelect ? { click: () => onSelect(loc) } : undefined}
+            />
+          ))}
+        </MarkerClusterGroup>
+      ) : (
+        cuCoordonate.map((loc) => (
+          <Marker
+            key={loc.nume}
+            position={[loc.lat, loc.lng]}
+            icon={pinIcon(loc)}
+            interactive={false}
+            riseOnHover={false}
+          />
+        ))
+      )}
     </MapContainer>
   );
 }

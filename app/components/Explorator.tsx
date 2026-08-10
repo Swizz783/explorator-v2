@@ -114,18 +114,29 @@ export default function Explorator({
         <div className="h-[55dvh] min-w-0 flex-none md:h-auto md:flex-1">
           <Harta locuri={locuriFiltrate} onSelect={setActivLoc} />
         </div>
-        <div className="min-h-0 flex-1 scroll-smooth overflow-y-auto border-t border-line bg-plaster p-3.5 md:w-[400px] md:max-w-[44vw] md:flex-initial md:border-l md:border-t-0">
-          <div className="mb-3 px-1 text-xs text-ink-soft">
+        {/* Zona listei arata clar ca un panou cu scroll propriu, separat de harta
+            de deasupra (nu pagina intreaga): umbra + bordura mai groasa sus, un
+            "maner" vizual (ca la un bottom sheet) si un header cu contorul, lipit
+            de sus cat timp lista se deruleaza (sticky), ca reperul sa ramana mereu
+            vizibil. Pe desktop dispar toate astea trei — header-ul revine la eticheta
+            discreta de dinainte, fara sticky/bordura/maner. */}
+        <div className="relative min-h-0 flex-1 scroll-smooth overflow-y-auto border-t-2 border-line bg-plaster shadow-[0_-6px_14px_rgba(33,30,24,0.09)] md:w-[400px] md:max-w-[44vw] md:flex-initial md:border-t-0 md:border-l md:shadow-none">
+          <div className="flex justify-center pt-2 md:hidden" aria-hidden="true">
+            <span className="h-1 w-9 rounded-full bg-line" />
+          </div>
+          <div className="sticky top-0 z-10 border-b border-line bg-plaster px-3.5 py-2.5 text-[13px] font-semibold text-ink md:static md:mb-3 md:border-b-0 md:bg-transparent md:px-1 md:pb-0 md:pt-3.5 md:text-xs md:font-normal md:text-ink-soft">
             {locuriFiltrate.length} locuri afișate
           </div>
-          {locuriFiltrate.map((loc) => (
-            <LocCard
-              key={loc.nume}
-              loc={loc}
-              activ={activLoc?.nume === loc.nume}
-              onClick={() => setActivLoc(loc)}
-            />
-          ))}
+          <div className="px-3.5 pb-3.5 pt-3 md:px-3.5 md:pb-3.5 md:pt-0">
+            {locuriFiltrate.map((loc) => (
+              <LocCard
+                key={loc.nume}
+                loc={loc}
+                activ={activLoc?.nume === loc.nume}
+                onClick={() => setActivLoc(loc)}
+              />
+            ))}
+          </div>
         </div>
       </div>
       {activLoc && (
