@@ -8,6 +8,7 @@ import type { Traseu } from "../data/trasee";
 import Filtre from "./Filtre";
 import LegendaStiluri from "./LegendaStiluri";
 import LocCard from "./LocCard";
+import LocCardOrizontal from "./LocCardOrizontal";
 import LocModal from "./LocModal";
 
 /* Leaflet atinge `window` la import, deci harta se incarca DOAR pe client.
@@ -106,30 +107,29 @@ export default function Explorator({
         stiluri={stiluriVizibile}
         areFaraStil={locuriFiltrate.some((l) => l.stil === null)}
       />
-      {/* Sub `md` harta si lista se stivuiesc: harta sus, pe majoritatea ecranului,
-          lista dedesubt cu scroll propriu. Inaltimea hartii e in `dvh`, nu `vh`, ca
-          sa urmareasca bara de adrese a browserului mobil (cu `vh` harta ar fi
-          taiata de bara). De la `md` in sus revin una langa alta, ca inainte. */}
-      <div className="flex min-h-0 flex-1 flex-col md:flex-row">
+      {/* Pe desktop, harta si lista stau alaturi, ambele umplu inaltimea fixa a
+          paginii (min-h-0 flex-1 md:flex-row), cu scroll intern doar pe lista.
+          Pe mobil e alt model: harta sta la o inaltime fixa (dvh, nu vh, ca sa
+          urmareasca bara de adrese a browserului — vezi comentariul de mai jos),
+          iar sub ea locurile apar intr-un rand orizontal derulabil (carusel),
+          nu o lista verticala — pagina intreaga se deruleaza normal, ca pe orice
+          alta ruta (vezi si MainArea.tsx, care scoate overflow-hidden pe mobil
+          pentru exact ruta asta). */}
+      <div className="flex flex-col md:min-h-0 md:flex-1 md:flex-row">
         <div className="h-[55dvh] min-w-0 flex-none md:h-auto md:flex-1">
           <Harta locuri={locuriFiltrate} onSelect={setActivLoc} />
         </div>
-        {/* Zona listei arata clar ca un panou cu scroll propriu, separat de harta
-            de deasupra (nu pagina intreaga): umbra + bordura mai groasa sus, un
-            "maner" vizual (ca la un bottom sheet) si un header cu contorul, lipit
-            de sus cat timp lista se deruleaza (sticky), ca reperul sa ramana mereu
-            vizibil. Pe desktop dispar toate astea trei — header-ul revine la eticheta
-            discreta de dinainte, fara sticky/bordura/maner. */}
-        <div className="relative min-h-0 flex-1 scroll-smooth overflow-y-auto border-t-2 border-line bg-plaster shadow-[0_-6px_14px_rgba(33,30,24,0.09)] md:w-[400px] md:max-w-[44vw] md:flex-initial md:border-t-0 md:border-l md:shadow-none">
-          <div className="flex justify-center pt-2 md:hidden" aria-hidden="true">
-            <span className="h-1 w-9 rounded-full bg-line" />
-          </div>
-          <div className="sticky top-0 z-10 border-b border-line bg-plaster px-3.5 py-2.5 text-[13px] font-semibold text-ink md:static md:mb-3 md:border-b-0 md:bg-transparent md:px-1 md:pb-0 md:pt-3.5 md:text-xs md:font-normal md:text-ink-soft">
+
+        {/* Randul orizontal, doar pe mobil. Fiecare card e ~78% din latimea
+            ecranului, ca urmatorul sa se vada partial si sa sugereze ca mai sunt
+            de derulat — cu scroll-snap, un swipe aterizeaza curat pe cate un card. */}
+        <div className="border-t border-line bg-plaster pb-3.5 pt-3 md:hidden">
+          <div className="px-3.5 pb-2 text-xs text-ink-soft">
             {locuriFiltrate.length} locuri afișate
           </div>
-          <div className="px-3.5 pb-3.5 pt-3 md:px-3.5 md:pb-3.5 md:pt-0">
+          <div className="flex snap-x snap-proximity gap-3 overflow-x-auto px-3.5">
             {locuriFiltrate.map((loc) => (
-              <LocCard
+              <LocCardOrizontal
                 key={loc.nume}
                 loc={loc}
                 activ={activLoc?.nume === loc.nume}
@@ -137,6 +137,22 @@ export default function Explorator({
               />
             ))}
           </div>
+        </div>
+
+        {/* Lista verticala, doar pe desktop — neschimbata fata de varianta dinainte
+            de redesign-ul de mobil (scroll propriu, langa harta). */}
+        <div className="hidden min-h-0 flex-1 overflow-y-auto border-l border-line bg-plaster p-3.5 md:block md:w-[400px] md:max-w-[44vw] md:flex-initial">
+          <div className="mb-3 px-1 text-xs text-ink-soft">
+            {locuriFiltrate.length} locuri afișate
+          </div>
+          {locuriFiltrate.map((loc) => (
+            <LocCard
+              key={loc.nume}
+              loc={loc}
+              activ={activLoc?.nume === loc.nume}
+              onClick={() => setActivLoc(loc)}
+            />
+          ))}
         </div>
       </div>
       {activLoc && (

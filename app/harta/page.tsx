@@ -28,7 +28,7 @@ export default async function HartaPage({ searchParams }: Props) {
   const initialStil = stil && stiluriValide.has(stil as Stil) ? (stil as Stil) : null;
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+    <div className="flex flex-1 flex-col md:min-h-0 md:overflow-hidden">
       <Explorator
         locuri={locuri}
         initialTip={initialTip}
