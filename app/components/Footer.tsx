@@ -39,9 +39,24 @@ function FacebookIcon() {
   );
 }
 
-/* Iconita de social: link activ daca avem URL, altfel span dezactivat (gri, fara href) —
-   ca sa nu fie niciodata un link mort cand cineva uita sa completeze URL-ul in Supabase. */
-function IconLink({ href, label, children }: { href: string | null; label: string; children: ReactNode }) {
+/* Randul de social: link activ daca avem URL, altfel span dezactivat (gri, fara
+   href) — ca sa nu fie niciodata un link mort cand cineva uita sa completeze URL-ul
+   in Supabase. Username-ul e independent de URL: cu URL dar fara username arata
+   doar iconita (ca inainte de acest username); fara URL, randul ramane dezactivat
+   indiferent daca username-ul e completat — un username fara destinatie n-are
+   sens sa fie afisat. Iconita si textul sunt in ACELASI <a>, nu doua linkuri
+   alaturate spre aceeasi adresa — un singur link e mai clar la screen reader. */
+function LinkSocial({
+  href,
+  username,
+  label,
+  children,
+}: {
+  href: string | null;
+  username: string | null;
+  label: string;
+  children: ReactNode;
+}) {
   if (!href) {
     return (
       <span
@@ -58,10 +73,13 @@ function IconLink({ href, label, children }: { href: string | null; label: strin
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={label}
-      className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 text-plaster-2 transition hover:border-white/50 hover:bg-white/10"
+      aria-label={username ? undefined : label}
+      className="group inline-flex items-center gap-2.5 text-plaster-2/85 transition hover:text-plaster-2"
     >
-      {children}
+      <span className="flex h-8 w-8 flex-none items-center justify-center rounded-full border border-white/20 transition group-hover:border-white/50 group-hover:bg-white/10">
+        {children}
+      </span>
+      {username && <span className="text-[13.5px] font-medium">{username}</span>}
     </a>
   );
 }
@@ -78,11 +96,19 @@ const LINKURI_NAVIGATIE = [
    contact), stivuite pe mobil. Fundal midnight (mai inchis decat brand-ul din header,
    ca fundalul sa nu se confunde cu accentul de brand), text deschis pentru contrast. */
 export default async function Footer() {
-  let social: ContactSocial = { instagramUrl: null, tiktokUrl: null, facebookUrl: null };
+  const golit: ContactSocial = {
+    instagramUrl: null,
+    tiktokUrl: null,
+    facebookUrl: null,
+    instagramUsername: null,
+    tiktokUsername: null,
+    facebookUsername: null,
+  };
+  let social: ContactSocial = golit;
   try {
     social = await getContactSocial();
   } catch {
-    social = { instagramUrl: null, tiktokUrl: null, facebookUrl: null };
+    social = golit;
   }
 
   return (
@@ -138,16 +164,16 @@ export default async function Footer() {
               Credite
             </Link>
           </div>
-          <div className="mt-4 flex items-center gap-2.5">
-            <IconLink href={social.instagramUrl} label="Instagram">
+          <div className="mt-4 flex flex-col gap-2.5">
+            <LinkSocial href={social.instagramUrl} username={social.instagramUsername} label="Instagram">
               <InstagramIcon />
-            </IconLink>
-            <IconLink href={social.tiktokUrl} label="TikTok">
+            </LinkSocial>
+            <LinkSocial href={social.tiktokUrl} username={social.tiktokUsername} label="TikTok">
               <TikTokIcon />
-            </IconLink>
-            <IconLink href={social.facebookUrl} label="Facebook">
+            </LinkSocial>
+            <LinkSocial href={social.facebookUrl} username={social.facebookUsername} label="Facebook">
               <FacebookIcon />
-            </IconLink>
+            </LinkSocial>
           </div>
         </div>
       </div>

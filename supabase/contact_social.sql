@@ -7,6 +7,9 @@ create table if not exists public.contact_social (
   instagram_url text,
   tiktok_url text,
   facebook_url text,
+  instagram_username text,
+  tiktok_username text,
+  facebook_username text,
   updated_at timestamptz not null default now()
 );
 
@@ -14,6 +17,9 @@ create table if not exists public.contact_social (
 -- coloanele aparute ulterior se adauga separat. Idempotent: fisierul poate fi rulat
 -- din nou oricand, si pe o baza noua, si pe una existenta.
 alter table public.contact_social add column if not exists facebook_url text;
+alter table public.contact_social add column if not exists instagram_username text;
+alter table public.contact_social add column if not exists tiktok_username text;
+alter table public.contact_social add column if not exists facebook_username text;
 
 -- RLS: citire publica (footer-ul e vizibil pe orice pagina, pentru orice vizitator).
 -- Fara politici de insert/update/delete pentru anon/authenticated => scrierea ramane

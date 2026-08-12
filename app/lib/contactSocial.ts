@@ -4,6 +4,11 @@ export type ContactSocial = {
   instagramUrl: string | null;
   tiktokUrl: string | null;
   facebookUrl: string | null;
+  /* Username afisat langa iconita (ex. "@bucquest"), separat de URL — optional,
+     independent de el: un URL fara username arata doar iconita, ca inainte. */
+  instagramUsername: string | null;
+  tiktokUsername: string | null;
+  facebookUsername: string | null;
 };
 
 /* Randul unic din `contact_social` — un URL gol/null e tratat identic (dezactivat).
@@ -25,5 +30,8 @@ export async function getContactSocial(): Promise<ContactSocial> {
     instagramUrl: data?.instagram_url || null,
     tiktokUrl: data?.tiktok_url || null,
     facebookUrl: data?.facebook_url || null,
+    instagramUsername: data?.instagram_username || null,
+    tiktokUsername: data?.tiktok_username || null,
+    facebookUsername: data?.facebook_username || null,
   };
 }
