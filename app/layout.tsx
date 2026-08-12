@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Inter, Playfair_Display } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
@@ -90,6 +91,7 @@ export default async function RootLayout({
           <FooterGate>
             <Footer />
           </FooterGate>
+          <Analytics />
         </VisitedProvider>
       </body>
     </html>
