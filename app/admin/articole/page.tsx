@@ -10,6 +10,12 @@ export const metadata: Metadata = {
   ...NEINDEXABIL,
 };
 
+// Server Action-urile isi iau timeout-ul de la pagina care le foloseste, nu
+// se poate seta in actions.ts (fisierul "use server" poate exporta doar
+// functii) — creste limita default de pe Vercel, ca uploadul mai multor
+// poze in paralel sa aiba timp sa se termine.
+export const maxDuration = 60;
+
 /* Ruta nu apare in navigatie si e inaccesibila oricui in afara de ADMIN_EMAIL —
    pentru oricine altcineva (neautentificat sau alt cont) se comporta ca o pagina
    inexistenta (404), nu ca un ecran de "acces interzis" care ar confirma ca ruta exista. */

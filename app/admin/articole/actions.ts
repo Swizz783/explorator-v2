@@ -45,18 +45,25 @@ export async function adaugaArticol(
     .getAll("poze")
     .filter((f): f is File => f instanceof File && f.size > 0);
 
-  const urlPoze: string[] = [];
-  for (const poza of poze) {
-    const cale = `${crypto.randomUUID()}.${extensieSigura(poza.name)}`;
-    const { error: eroareUpload } = await supabaseAdmin.storage
-      .from("articole")
-      .upload(cale, poza, { contentType: poza.type || undefined });
+  let urlPoze: string[];
+  try {
+    urlPoze = await Promise.all(
+      poze.map(async (poza) => {
+        const cale = `${crypto.randomUUID()}.${extensieSigura(poza.name)}`;
+        const { error: eroareUpload } = await supabaseAdmin.storage
+          .from("articole")
+          .upload(cale, poza, { contentType: poza.type || undefined });
 
-    if (eroareUpload) {
-      return { ok: false, mesaj: `Nu s-a putut urca poza "${poza.name}": ${eroareUpload.message}` };
-    }
+        if (eroareUpload) {
+          throw new Error(`Nu s-a putut urca poza "${poza.name}": ${eroareUpload.message}`);
+        }
 
-    urlPoze.push(supabaseAdmin.storage.from("articole").getPublicUrl(cale).data.publicUrl);
+        return supabaseAdmin.storage.from("articole").getPublicUrl(cale).data.publicUrl;
+      }),
+    );
+  } catch (eroare) {
+    const mesaj = eroare instanceof Error ? eroare.message : "Nu s-a putut urca una dintre poze.";
+    return { ok: false, mesaj };
   }
 
   const { error: eroareInsert } = await supabaseAdmin.from("articole").insert({
