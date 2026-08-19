@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
+import ArticolCarusel from "../../components/ArticolCarusel";
 import { getArticolById } from "../../lib/articole";
 import { paginaMetadata } from "../../lib/seo";
 
@@ -55,16 +56,7 @@ export default async function ArticolPage({ params }: Props) {
         ← Toate articolele
       </Link>
 
-      {articol.poze[0] && (
-        <div className="mt-5 overflow-hidden rounded-[13px] border border-line">
-          {/* eslint-disable-next-line @next/next/no-img-element -- poza e completata manual din dashboard sau urcata din admin, poate fi orice domeniu */}
-          <img
-            src={articol.poze[0]}
-            alt={articol.titlu}
-            className="max-h-[420px] w-full object-cover"
-          />
-        </div>
-      )}
+      <ArticolCarusel poze={articol.poze} titlu={articol.titlu} />
 
       <div className="mt-6 text-[11.5px] font-semibold uppercase tracking-[0.18em] text-ink-soft">
         {data}
@@ -74,20 +66,6 @@ export default async function ArticolPage({ params }: Props) {
       <div className="mt-6 whitespace-pre-line text-[15px] leading-[1.75] text-[#3a362d]">
         {articol.continut}
       </div>
-
-      {articol.poze.length > 1 && (
-        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {articol.poze.slice(1).map((poza) => (
-            // eslint-disable-next-line @next/next/no-img-element -- poza vine din Supabase Storage, nu din /public
-            <img
-              key={poza}
-              src={poza}
-              alt={articol.titlu}
-              className="aspect-square w-full rounded-[13px] border border-line object-cover"
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 }
