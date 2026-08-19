@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${articol.titlu} · BucQuest`,
     description: articol.rezumat,
     path: `/blog/${id}`,
-    imagine: articol.pozaUrl ?? undefined,
+    imagine: articol.poze[0] ?? undefined,
   });
 }
 
@@ -55,11 +55,11 @@ export default async function ArticolPage({ params }: Props) {
         ← Toate articolele
       </Link>
 
-      {articol.pozaUrl && (
+      {articol.poze[0] && (
         <div className="mt-5 overflow-hidden rounded-[13px] border border-line">
-          {/* eslint-disable-next-line @next/next/no-img-element -- poza_url e completata manual din dashboard, poate fi orice domeniu */}
+          {/* eslint-disable-next-line @next/next/no-img-element -- poza e completata manual din dashboard sau urcata din admin, poate fi orice domeniu */}
           <img
-            src={articol.pozaUrl}
+            src={articol.poze[0]}
             alt={articol.titlu}
             className="max-h-[420px] w-full object-cover"
           />
@@ -74,6 +74,20 @@ export default async function ArticolPage({ params }: Props) {
       <div className="mt-6 whitespace-pre-line text-[15px] leading-[1.75] text-[#3a362d]">
         {articol.continut}
       </div>
+
+      {articol.poze.length > 1 && (
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {articol.poze.slice(1).map((poza) => (
+            // eslint-disable-next-line @next/next/no-img-element -- poza vine din Supabase Storage, nu din /public
+            <img
+              key={poza}
+              src={poza}
+              alt={articol.titlu}
+              className="aspect-square w-full rounded-[13px] border border-line object-cover"
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

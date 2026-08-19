@@ -1,11 +1,12 @@
 -- Ruleaza in Supabase Dashboard -> SQL Editor, dupa schema.sql.
--- Tabel pentru blogul aplicatiei. Scrierea se face DOAR manual, din dashboard
--- (Table Editor sau SQL Editor) — nu exista inca formular de admin in aplicatie.
+-- Tabel pentru blogul aplicatiei. Scrierea se face din /admin/articole.
+-- Pe o baza existenta (creata inainte de coloana `poze`), ruleaza si
+-- articole_migrare_poze.sql, care migreaza de la poza_url la poze.
 
 create table if not exists public.articole (
   id bigint generated always as identity primary key,
   titlu text not null,
-  poza_url text,
+  poze text[] not null default '{}',
   rezumat text not null,
   continut text not null,
   data_publicare date not null default current_date,

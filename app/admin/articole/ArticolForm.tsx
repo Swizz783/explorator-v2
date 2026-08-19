@@ -19,22 +19,24 @@ function azi(): string {
   return `${an}-${luna}-${zi}`;
 }
 
+type Previzualizare = { url: string; nume: string };
+
 export default function ArticolForm() {
   const [stare, actiune, pending] = useActionState(adaugaArticol, stareInitiala);
   const formRef = useRef<HTMLFormElement>(null);
-  const [previzualizare, setPrevizualizare] = useState<{ url: string; nume: string } | null>(null);
+  const [previzualizari, setPrevizualizari] = useState<Previzualizare[]>([]);
   const [ultimaStareGolita, setUltimaStareGolita] = useState<StareFormular>(null);
 
-  // Golim previzualizarea in timpul randarii, o singura data per succes
+  // Golim lista de previzualizari in timpul randarii, o singura data per succes
   // (pattern recomandat de React pt. a "reactiona" la o schimbare de stare fara
-  // un efect separat) — revocarea URL-ului vechi se face mai jos, in cleanup-ul
-  // efectului legat de `previzualizare`.
+  // un efect separat) — revocarea URL-urilor vechi se face mai jos, in cleanup-ul
+  // efectului legat de `previzualizari`.
   if (stare?.ok && stare !== ultimaStareGolita) {
     setUltimaStareGolita(stare);
-    setPrevizualizare(null);
+    setPrevizualizari([]);
   }
 
-  // Reseteaza formularul DOM (inclusiv input-ul de fisier si data) dupa un
+  // Reseteaza formularul DOM (inclusiv input-ul de fisiere si data) dupa un
   // succes, ca sa fie gata pentru urmatorul articol.
   useEffect(() => {
     if (stare?.ok) {
@@ -42,17 +44,17 @@ export default function ArticolForm() {
     }
   }, [stare]);
 
-  // Revoca URL-ul de previzualizare creat la pasul anterior de fiecare data
-  // cand se schimba (poza noua aleasa sau golire la succes) sau la unmount.
+  // Revoca URL-urile de previzualizare create la pasul anterior de fiecare data
+  // cand lista se schimba (fisiere noi alese sau golire la succes) sau la unmount.
   useEffect(() => {
     return () => {
-      if (previzualizare) URL.revokeObjectURL(previzualizare.url);
+      previzualizari.forEach((p) => URL.revokeObjectURL(p.url));
     };
-  }, [previzualizare]);
+  }, [previzualizari]);
 
-  function laSchimbarePoza(e: React.ChangeEvent<HTMLInputElement>) {
-    const fisier = e.target.files?.[0] ?? null;
-    setPrevizualizare(fisier ? { url: URL.createObjectURL(fisier), nume: fisier.name } : null);
+  function laSchimbareFisiere(e: React.ChangeEvent<HTMLInputElement>) {
+    const fisiere = Array.from(e.target.files ?? []);
+    setPrevizualizari(fisiere.map((f) => ({ url: URL.createObjectURL(f), nume: f.name })));
   }
 
   return (
@@ -89,23 +91,29 @@ export default function ArticolForm() {
       </label>
 
       <label className="flex flex-col gap-1.5">
-        <span className={clasaLabel}>Poză</span>
+        <span className={clasaLabel}>Poze</span>
         <input
           type="file"
-          name="poza"
+          name="poze"
           accept="image/*"
-          onChange={laSchimbarePoza}
+          multiple
+          onChange={laSchimbareFisiere}
           className="text-sm text-ink file:mr-3 file:rounded-lg file:border file:border-line file:bg-plaster-2 file:px-3 file:py-2 file:text-sm file:font-medium file:text-ink hover:file:border-brand"
         />
       </label>
 
-      {previzualizare && (
-        // eslint-disable-next-line @next/next/no-img-element -- preview local (blob:), next/image nu are ce optimiza aici
-        <img
-          src={previzualizare.url}
-          alt={previzualizare.nume}
-          className="aspect-video w-full max-w-[280px] rounded-lg border border-line object-cover"
-        />
+      {previzualizari.length > 0 && (
+        <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4">
+          {previzualizari.map((p) => (
+            // eslint-disable-next-line @next/next/no-img-element -- preview local (blob:), next/image nu are ce optimiza aici
+            <img
+              key={p.url}
+              src={p.url}
+              alt={p.nume}
+              className="aspect-square w-full rounded-lg border border-line object-cover"
+            />
+          ))}
+        </div>
       )}
 
       <button

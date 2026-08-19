@@ -19,10 +19,10 @@ export default function ArticolCard({ articol }: { articol: Articol }) {
       className="block overflow-hidden rounded-[13px] border border-line bg-card transition hover:border-brand hover:shadow-card"
     >
       <div className="relative h-[150px]">
-        {articol.pozaUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element -- poza_url e completata manual din dashboard, poate fi orice domeniu
+        {articol.poze[0] ? (
+          // eslint-disable-next-line @next/next/no-img-element -- poza e completata manual din dashboard sau urcata din admin, poate fi orice domeniu
           <img
-            src={articol.pozaUrl}
+            src={articol.poze[0]}
             alt={articol.titlu}
             className="h-full w-full object-cover"
           />

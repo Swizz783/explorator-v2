@@ -41,10 +41,12 @@ export async function adaugaArticol(
 
   const supabaseAdmin = getSupabaseAdmin();
 
-  const poza = formData.get("poza");
-  let pozaUrl: string | null = null;
+  const poze = formData
+    .getAll("poze")
+    .filter((f): f is File => f instanceof File && f.size > 0);
 
-  if (poza instanceof File && poza.size > 0) {
+  const urlPoze: string[] = [];
+  for (const poza of poze) {
     const cale = `${crypto.randomUUID()}.${extensieSigura(poza.name)}`;
     const { error: eroareUpload } = await supabaseAdmin.storage
       .from("articole")
@@ -54,7 +56,7 @@ export async function adaugaArticol(
       return { ok: false, mesaj: `Nu s-a putut urca poza "${poza.name}": ${eroareUpload.message}` };
     }
 
-    pozaUrl = supabaseAdmin.storage.from("articole").getPublicUrl(cale).data.publicUrl;
+    urlPoze.push(supabaseAdmin.storage.from("articole").getPublicUrl(cale).data.publicUrl);
   }
 
   const { error: eroareInsert } = await supabaseAdmin.from("articole").insert({
@@ -62,7 +64,7 @@ export async function adaugaArticol(
     rezumat,
     continut,
     data_publicare: dataPublicare,
-    poza_url: pozaUrl,
+    poze: urlPoze,
   });
 
   if (eroareInsert) {

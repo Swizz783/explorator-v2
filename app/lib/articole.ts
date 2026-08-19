@@ -3,7 +3,7 @@ import { supabase } from "./supabase";
 export type Articol = {
   id: number;
   titlu: string;
-  pozaUrl: string | null;
+  poze: string[];
   rezumat: string;
   continut: string;
   dataPublicare: string;
@@ -12,7 +12,7 @@ export type Articol = {
 type ArticolRow = {
   id: number;
   titlu: string;
-  poza_url: string | null;
+  poze: string[];
   rezumat: string;
   continut: string;
   data_publicare: string;
@@ -22,7 +22,7 @@ function mapRow(row: ArticolRow): Articol {
   return {
     id: row.id,
     titlu: row.titlu,
-    pozaUrl: row.poza_url,
+    poze: row.poze ?? [],
     rezumat: row.rezumat,
     continut: row.continut,
     dataPublicare: row.data_publicare,
