@@ -81,7 +81,12 @@ export default function LocatieForm() {
         </label>
         <label className="flex flex-col gap-1.5">
           <span className={clasaLabel}>Arhitect (opțional)</span>
-          <input type="text" name="arhitect" className={clasaInput} />
+          <input
+            type="text"
+            name="arhitect"
+            className={clasaInput}
+            placeholder="ex: Horia Maicu — sau «Arhitect necunoscut» dacă nu se cunoaște"
+          />
         </label>
       </div>
 

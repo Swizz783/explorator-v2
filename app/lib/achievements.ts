@@ -14,6 +14,12 @@ export const NUME_ACHIEVEMENT_TIP: Record<Tip, string> = {
   "Monument": "De neuitat",
   "Cafenea / restaurant": "La un pahar de istorie",
   "Pasaj": "Pe sub oraș",
+  "Casa": "Vecinul curios",
+  "Vila": "Prin cartierele elegante",
+  "Gara": "Călătorul",
+  "Teatru": "Aplauze de la balcon",
+  "Piata": "În mijlocul mulțimii",
+  "Cimitir": "Printre pietre de amintire",
 };
 
 export const NUME_ACHIEVEMENT_STIL: Record<Stil, string> = {
@@ -23,6 +29,9 @@ export const NUME_ACHIEVEMENT_STIL: Record<Stil, string> = {
   "Neoromanesc": "Rădăcini noi",
   "Neoclasic / eclectic": "Coloane și cornișe",
   "Brancovenesc": "Moștenirea brâncovenească",
+  "Mediteranean": "Sub soarele sudului",
+  "Modern / contemporan": "Linii curate",
+  "Neobizantin": "Mozaicuri și cupole",
 };
 
 export const NUME_ACHIEVEMENT_NERENOVAT = "Exploratorul ruinelor";

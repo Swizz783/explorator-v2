@@ -13,14 +13,20 @@ import { join } from "node:path";
 const MAPARE: Record<string, string> = {
   "Biserica": "church",
   "Cafenea / restaurant": "coffee",
+  "Casa": "house",
+  "Cimitir": "cross",
   "Cladire": "building-2",
+  "Gara": "train-front",
   "Loc insolit": "sparkles",
   "Monument": "award",
   "Muzeu": "university",
   "Palat": "landmark",
   "Parc": "trees",
   "Pasaj": "door-open",
+  "Piata": "land-plot",
   "Strada": "signpost",
+  "Teatru": "drama",
+  "Vila": "castle",
 };
 
 type IconNode = [string, Record<string, string | number>][];

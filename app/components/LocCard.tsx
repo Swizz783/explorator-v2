@@ -60,7 +60,7 @@ export default function LocCard({ loc, activ, onClick }: Props) {
         </p>
         {loc.arhitect && (
           <p className="mb-3 mt-2 text-[11.5px] text-ink-soft">
-            Arhitect: {loc.arhitect}
+            {/^arhitect\b/i.test(loc.arhitect) ? loc.arhitect : `Arhitect: ${loc.arhitect}`}
           </p>
         )}
         <VisitButton nume={loc.nume} className={loc.arhitect ? "" : "mt-3"} />
