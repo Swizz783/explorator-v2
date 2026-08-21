@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import type { Loc } from "../data/locuri";
+import { rezolvaPozaLocatie } from "../lib/poza-locatie";
 import Placeholder from "./Placeholder";
 import Tags from "./Tag";
 
@@ -40,7 +41,7 @@ export default function LocCardOrizontal({ loc, activ, onClick }: Props) {
       <div className="relative h-[110px]">
         {poza ? (
           <Image
-            src={`/images/${poza}`}
+            src={rezolvaPozaLocatie(poza)}
             alt={loc.nume}
             fill
             sizes="80vw"

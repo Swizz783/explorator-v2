@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { Loc } from "../data/locuri";
+import { rezolvaPozaLocatie } from "../lib/poza-locatie";
 import Placeholder from "./Placeholder";
 import Tags from "./Tag";
 import VisitButton from "./VisitButton";
@@ -69,7 +70,7 @@ export default function LocModal({ loc, onClose }: Props) {
               >
                 <div className="relative h-full w-full">
                   <Image
-                    src={`/images/${poza}`}
+                    src={rezolvaPozaLocatie(poza)}
                     alt={`${loc.nume} — poza ${i + 1}`}
                     fill
                     sizes="(max-width: 768px) 100vw, 760px"
@@ -140,7 +141,7 @@ export default function LocModal({ loc, onClose }: Props) {
         >
           <div className="relative h-full w-full">
             <Image
-              src={`/images/${poze[index]}`}
+              src={rezolvaPozaLocatie(poze[index])}
               alt={`${loc.nume} — poza ${index + 1}, marita`}
               fill
               sizes="100vw"
