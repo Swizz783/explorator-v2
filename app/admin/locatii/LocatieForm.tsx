@@ -1,8 +1,9 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { startTransition, useActionState, useEffect, useRef, useState } from "react";
 import { CULOARE_STIL, CULOARE_TIP, type Stil, type Tip } from "../../data/locuri";
-import { adaugaLocatie, type StareFormular } from "./actions";
+import { createClient } from "../../lib/supabase/client";
+import { adaugaLocatie, obtineUrlUrcare, type StareFormular } from "./actions";
 
 const TIPURI = Object.keys(CULOARE_TIP) as Tip[];
 const STILURI = Object.keys(CULOARE_STIL) as Stil[];
@@ -19,7 +20,10 @@ export default function LocatieForm() {
   const [stare, actiune, pending] = useActionState(adaugaLocatie, stareInitiala);
   const formRef = useRef<HTMLFormElement>(null);
   const [previzualizari, setPrevizualizari] = useState<Previzualizare[]>([]);
+  const [fisiere, setFisiere] = useState<File[]>([]);
   const [ultimaStareGolita, setUltimaStareGolita] = useState<StareFormular>(null);
+  const [seUrca, setSeUrca] = useState(false);
+  const [eroareUrcare, setEroareUrcare] = useState<string | null>(null);
 
   // Golim lista de previzualizari in timpul randarii, o singura data per succes
   // (pattern recomandat de React pt. a "reactiona" la o schimbare de stare fara
@@ -28,6 +32,7 @@ export default function LocatieForm() {
   if (stare?.ok && stare !== ultimaStareGolita) {
     setUltimaStareGolita(stare);
     setPrevizualizari([]);
+    setFisiere([]);
   }
 
   // Reseteaza formularul DOM (inclusiv input-ul de fisiere) dupa un succes,
@@ -47,12 +52,71 @@ export default function LocatieForm() {
   }, [previzualizari]);
 
   function laSchimbareFisiere(e: React.ChangeEvent<HTMLInputElement>) {
-    const fisiere = Array.from(e.target.files ?? []);
-    setPrevizualizari(fisiere.map((f) => ({ url: URL.createObjectURL(f), nume: f.name })));
+    const fisiereNoi = Array.from(e.target.files ?? []);
+    setFisiere(fisiereNoi);
+    setPrevizualizari(fisiereNoi.map((f) => ({ url: URL.createObjectURL(f), nume: f.name })));
   }
 
+  // Pozele nu mai trec prin Server Action (limita fixa de 4.5MB/request pe
+  // Vercel) — se urca direct din browser catre Supabase Storage, folosind
+  // URL-uri de urcare semnate obtinute de la server, apoi se trimit doar
+  // URL-urile publice rezultate catre adaugaLocatie.
+  async function laSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setEroareUrcare(null);
+
+    const formEl = formRef.current;
+    if (!formEl) return;
+
+    const formData = new FormData(formEl);
+    formData.delete("poze");
+
+    if (fisiere.length === 0) {
+      startTransition(() => {
+        actiune(formData);
+      });
+      return;
+    }
+
+    setSeUrca(true);
+    try {
+      const rezultat = await obtineUrlUrcare(fisiere.map((f) => f.name));
+      if (!rezultat.ok) {
+        setEroareUrcare(rezultat.mesaj);
+        return;
+      }
+
+      const supabase = createClient();
+      for (let i = 0; i < rezultat.urlUri.length; i++) {
+        const { cale, token, publicUrl } = rezultat.urlUri[i];
+        const fisier = fisiere[i];
+        const { error } = await supabase.storage.from("locatii").uploadToSignedUrl(cale, token, fisier);
+
+        if (error) {
+          setEroareUrcare(`Nu s-a putut urca poza "${fisier.name}": ${error.message}`);
+          return;
+        }
+
+        formData.append("poze", publicUrl);
+      }
+
+      startTransition(() => {
+        actiune(formData);
+      });
+    } finally {
+      setSeUrca(false);
+    }
+  }
+
+  const seSalveaza = seUrca || pending;
+
   return (
-    <form ref={formRef} action={actiune} className="mt-5 flex flex-col gap-4">
+    <form ref={formRef} onSubmit={laSubmit} className="mt-5 flex flex-col gap-4">
+      {eroareUrcare && (
+        <p className="rounded-lg border border-[#e3b8b0] bg-[#fbecea] px-3 py-2.5 text-[13px] text-[#8a3b2e]">
+          {eroareUrcare}
+        </p>
+      )}
       {stare && !stare.ok && (
         <p className="rounded-lg border border-[#e3b8b0] bg-[#fbecea] px-3 py-2.5 text-[13px] text-[#8a3b2e]">
           {stare.mesaj}
@@ -171,10 +235,10 @@ export default function LocatieForm() {
 
       <button
         type="submit"
-        disabled={pending}
+        disabled={seSalveaza}
         className="mt-1.5 inline-flex w-full items-center justify-center rounded-[9px] bg-ink px-[22px] py-[13px] text-sm font-semibold text-plaster-2 transition hover:bg-brand-hover disabled:opacity-60"
       >
-        {pending ? "Se salvează…" : "Adaugă locația"}
+        {seSalveaza ? "Se salvează…" : "Adaugă locația"}
       </button>
     </form>
   );

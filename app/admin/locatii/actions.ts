@@ -8,6 +8,11 @@ import { createClient } from "../../lib/supabase/server";
 
 export type StareFormular = { ok: boolean; mesaj: string } | null;
 
+export type UrlUrcare = { cale: string; signedUrl: string; token: string; publicUrl: string };
+export type RezultatUrlUrcare =
+  | { ok: true; urlUri: UrlUrcare[] }
+  | { ok: false; mesaj: string };
+
 const TIPURI = Object.keys(CULOARE_TIP) as Tip[];
 const STILURI = Object.keys(CULOARE_STIL) as Stil[];
 
@@ -24,6 +29,49 @@ function extensieSigura(numeFisier: string): string {
   const bruta = punct !== -1 ? numeFisier.slice(punct + 1) : "";
   const curata = bruta.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
   return curata || "jpg";
+}
+
+/* Genereaza URL-uri de urcare semnate pentru bucket-ul "locatii" — pozele se
+   urca apoi direct din browser catre Supabase Storage, ca sa ocolim limita
+   fixa de 4.5MB per request pentru Server Actions pe Vercel. */
+export async function obtineUrlUrcare(numeFisiere: string[]): Promise<RezultatUrlUrcare> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!esteAdmin(user?.email)) {
+    return { ok: false, mesaj: "Nu ai permisiunea sa faci asta." };
+  }
+
+  const supabaseAdmin = getSupabaseAdmin();
+
+  try {
+    const urlUri = await Promise.all(
+      numeFisiere.map(async (numeFisier) => {
+        const cale = `${crypto.randomUUID()}.${extensieSigura(numeFisier)}`;
+        const { data, error } = await supabaseAdmin.storage
+          .from("locatii")
+          .createSignedUploadUrl(cale);
+
+        if (error || !data) {
+          throw new Error(
+            `Nu s-a putut genera URL de urcare pentru "${numeFisier}": ${error?.message ?? "eroare necunoscuta"}`,
+          );
+        }
+
+        const publicUrl = supabaseAdmin.storage.from("locatii").getPublicUrl(cale).data.publicUrl;
+
+        return { cale, signedUrl: data.signedUrl, token: data.token, publicUrl };
+      }),
+    );
+
+    return { ok: true, urlUri };
+  } catch (eroare) {
+    const mesaj =
+      eroare instanceof Error ? eroare.message : "Nu s-au putut genera URL-urile de urcare.";
+    return { ok: false, mesaj };
+  }
 }
 
 export async function adaugaLocatie(
@@ -67,23 +115,10 @@ export async function adaugaLocatie(
 
   const supabaseAdmin = getSupabaseAdmin();
 
-  const poze = formData
+  const urlPoze = formData
     .getAll("poze")
-    .filter((f): f is File => f instanceof File && f.size > 0);
-
-  const urlPoze: string[] = [];
-  for (const poza of poze) {
-    const cale = `${crypto.randomUUID()}.${extensieSigura(poza.name)}`;
-    const { error: eroareUpload } = await supabaseAdmin.storage
-      .from("locatii")
-      .upload(cale, poza, { contentType: poza.type || undefined });
-
-    if (eroareUpload) {
-      return { ok: false, mesaj: `Nu s-a putut urca poza "${poza.name}": ${eroareUpload.message}` };
-    }
-
-    urlPoze.push(supabaseAdmin.storage.from("locatii").getPublicUrl(cale).data.publicUrl);
-  }
+    .map((v) => String(v).trim())
+    .filter(Boolean);
 
   const { error: eroareInsert } = await supabaseAdmin.from("locatii").insert({
     nume,
