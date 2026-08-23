@@ -15,12 +15,21 @@ const clasaInput =
 const clasaLabel = "text-[12.5px] font-medium text-ink-soft";
 
 type Previzualizare = { url: string; nume: string };
+type MetaCredit = { necesitaCredit: boolean; autor: string; sursaUrl: string; licenta: string };
+
+const metaCreditGoala = (): MetaCredit => ({
+  necesitaCredit: false,
+  autor: "",
+  sursaUrl: "",
+  licenta: "",
+});
 
 export default function LocatieForm() {
   const [stare, actiune, pending] = useActionState(adaugaLocatie, stareInitiala);
   const formRef = useRef<HTMLFormElement>(null);
   const [previzualizari, setPrevizualizari] = useState<Previzualizare[]>([]);
   const [fisiere, setFisiere] = useState<File[]>([]);
+  const [crediteMeta, setCrediteMeta] = useState<MetaCredit[]>([]);
   const [ultimaStareGolita, setUltimaStareGolita] = useState<StareFormular>(null);
   const [seUrca, setSeUrca] = useState(false);
   const [eroareUrcare, setEroareUrcare] = useState<string | null>(null);
@@ -33,6 +42,7 @@ export default function LocatieForm() {
     setUltimaStareGolita(stare);
     setPrevizualizari([]);
     setFisiere([]);
+    setCrediteMeta([]);
   }
 
   // Reseteaza formularul DOM (inclusiv input-ul de fisiere) dupa un succes,
@@ -55,6 +65,11 @@ export default function LocatieForm() {
     const fisiereNoi = Array.from(e.target.files ?? []);
     setFisiere(fisiereNoi);
     setPrevizualizari(fisiereNoi.map((f) => ({ url: URL.createObjectURL(f), nume: f.name })));
+    setCrediteMeta(fisiereNoi.map(() => metaCreditGoala()));
+  }
+
+  function actualizeazaCredit(index: number, parte: Partial<MetaCredit>) {
+    setCrediteMeta((prev) => prev.map((m, i) => (i === index ? { ...m, ...parte } : m)));
   }
 
   // Pozele nu mai trec prin Server Action (limita fixa de 4.5MB/request pe
@@ -70,6 +85,7 @@ export default function LocatieForm() {
 
     const formData = new FormData(formEl);
     formData.delete("poze");
+    formData.append("crediteMeta", JSON.stringify(crediteMeta));
 
     if (fisiere.length === 0) {
       startTransition(() => {
@@ -220,16 +236,55 @@ export default function LocatieForm() {
       </label>
 
       {previzualizari.length > 0 && (
-        <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4">
-          {previzualizari.map((p) => (
-            // eslint-disable-next-line @next/next/no-img-element -- preview local (blob:), next/image nu are ce optimiza aici
-            <img
-              key={p.url}
-              src={p.url}
-              alt={p.nume}
-              className="aspect-square w-full rounded-lg border border-line object-cover"
-            />
-          ))}
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+          {previzualizari.map((p, i) => {
+            const meta = crediteMeta[i] ?? metaCreditGoala();
+            return (
+              <div key={p.url} className="flex flex-col gap-2 rounded-lg border border-line bg-plaster-2 p-2.5">
+                {/* eslint-disable-next-line @next/next/no-img-element -- preview local (blob:), next/image nu are ce optimiza aici */}
+                <img
+                  src={p.url}
+                  alt={p.nume}
+                  className="aspect-square w-full rounded-md border border-line object-cover"
+                />
+                <label className="flex items-center gap-2 text-[12px] text-ink">
+                  <input
+                    type="checkbox"
+                    checked={meta.necesitaCredit}
+                    onChange={(e) => actualizeazaCredit(i, { necesitaCredit: e.target.checked })}
+                    className="h-3.5 w-3.5 rounded border-line"
+                  />
+                  Nu e poza mea — are nevoie de credit
+                </label>
+                {meta.necesitaCredit && (
+                  <div className="flex flex-col gap-1.5">
+                    <input
+                      type="text"
+                      required
+                      placeholder="Autor"
+                      value={meta.autor}
+                      onChange={(e) => actualizeazaCredit(i, { autor: e.target.value })}
+                      className="w-full rounded-md border border-line bg-card px-2 py-1.5 text-[12px] text-ink placeholder:text-ink-soft focus:border-brand focus:outline-none"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Sursă (link)"
+                      value={meta.sursaUrl}
+                      onChange={(e) => actualizeazaCredit(i, { sursaUrl: e.target.value })}
+                      className="w-full rounded-md border border-line bg-card px-2 py-1.5 text-[12px] text-ink placeholder:text-ink-soft focus:border-brand focus:outline-none"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Licență (ex: CC BY-SA 4.0)"
+                      value={meta.licenta}
+                      onChange={(e) => actualizeazaCredit(i, { licenta: e.target.value })}
+                      className="w-full rounded-md border border-line bg-card px-2 py-1.5 text-[12px] text-ink placeholder:text-ink-soft focus:border-brand focus:outline-none"
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
 

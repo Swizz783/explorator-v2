@@ -8,6 +8,50 @@ import { createClient } from "../../lib/supabase/server";
 
 export type StareFormular = { ok: boolean; mesaj: string } | null;
 
+type MetaCredit = { necesitaCredit: boolean; autor: string; sursaUrl: string; licenta: string };
+
+/* Parseaza array-ul JSON de metadate de credit trimis din formular — un
+   element per poza, in aceeasi ordine ca urlPoze. Intrare invalida -> []. */
+function parseCrediteMeta(formData: FormData): MetaCredit[] {
+  try {
+    const parsat = JSON.parse(String(formData.get("crediteMeta") ?? "[]"));
+    return Array.isArray(parsat) ? parsat : [];
+  } catch {
+    return [];
+  }
+}
+
+/* Insereaza in tabela "credite" atribuirile pentru pozele marcate manual ca
+   avand nevoie de credit — esecul nu blocheaza salvarea locatiei/articolului,
+   deja facuta; doar il logam. */
+async function insereazaCredite(
+  supabaseAdmin: ReturnType<typeof getSupabaseAdmin>,
+  urlPoze: string[],
+  crediteMeta: MetaCredit[],
+  referinta: string,
+) {
+  for (let i = 0; i < urlPoze.length; i++) {
+    const meta = crediteMeta[i];
+    if (!meta?.necesitaCredit) continue;
+
+    const autor = String(meta.autor ?? "").trim();
+    if (!autor) continue;
+
+    const { error } = await supabaseAdmin.from("credite").insert({
+      poza_url: urlPoze[i],
+      referinta,
+      autor,
+      licenta: String(meta.licenta ?? "").trim() || null,
+      licenta_url: null,
+      sursa_url: String(meta.sursaUrl ?? "").trim() || null,
+    });
+
+    if (error) {
+      console.error(`Nu s-a putut salva creditul pentru poza "${urlPoze[i]}":`, error.message);
+    }
+  }
+}
+
 export type UrlUrcare = { cale: string; signedUrl: string; token: string; publicUrl: string };
 export type RezultatUrlUrcare =
   | { ok: true; urlUri: UrlUrcare[] }
@@ -142,6 +186,9 @@ export async function adaugaLocatie(
         : `Nu s-a putut salva locația: ${eroareInsert.message}`;
     return { ok: false, mesaj };
   }
+
+  const crediteMeta = parseCrediteMeta(formData);
+  await insereazaCredite(supabaseAdmin, urlPoze, crediteMeta, nume);
 
   revalidatePath("/", "layout");
 
