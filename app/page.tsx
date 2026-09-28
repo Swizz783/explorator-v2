@@ -155,6 +155,13 @@ export default async function Home() {
               </Link>
             );
           })}
+        </div>
+      </section>
+
+      {/* ---------- STILURI ARHITECTURALE ---------- */}
+      <section id="stiluri" className="mt-11 scroll-mt-6 sm:mt-14">
+        <h2 className="text-xl font-semibold sm:text-2xl">Explorează pe stiluri arhitecturale</h2>
+        <div className="mt-4 flex flex-wrap gap-2">
           {stiluri.map((s) => (
             <Link
               key={`stil-${s}`}
