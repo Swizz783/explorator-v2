@@ -12,6 +12,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/galerie`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${SITE_URL}/despre`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${SITE_URL}/credite`, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${SITE_URL}/termeni`, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${SITE_URL}/confidentialitate`, changeFrequency: "yearly", priority: 0.2 },
   ];
 
   let articole: Awaited<ReturnType<typeof getArticole>> = [];

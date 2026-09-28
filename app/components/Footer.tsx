@@ -163,6 +163,12 @@ export default async function Footer() {
             <Link href="/credite" className="text-plaster-2/75 transition hover:text-plaster-2">
               Credite
             </Link>
+            <Link href="/termeni" className="text-plaster-2/75 transition hover:text-plaster-2">
+              Termeni și condiții
+            </Link>
+            <Link href="/confidentialitate" className="text-plaster-2/75 transition hover:text-plaster-2">
+              Politica de confidențialitate
+            </Link>
           </div>
           <div className="mt-4 flex flex-col gap-2.5">
             <LinkSocial href={social.instagramUrl} username={social.instagramUsername} label="Instagram">

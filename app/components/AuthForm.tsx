@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { login, loginWithGoogle, signup } from "../autentificare/actions";
 
@@ -116,6 +117,20 @@ export default function AuthForm({ eroare, mesaj }: Props) {
         >
           {mod === "login" ? "Intră în cont" : "Creează cont"}
         </button>
+
+        {mod === "inregistrare" && (
+          <p className="text-center text-[12px] leading-[1.6] text-ink-soft">
+            Prin crearea contului accepți{" "}
+            <Link href="/termeni" className="text-brand">
+              Termenii
+            </Link>{" "}
+            și{" "}
+            <Link href="/confidentialitate" className="text-brand">
+              Politica de confidențialitate
+            </Link>
+            .
+          </p>
+        )}
       </form>
 
       <div className="mt-4 flex items-center gap-3 text-[11.5px] uppercase tracking-[0.14em] text-ink-soft">
