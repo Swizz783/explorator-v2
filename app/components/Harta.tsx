@@ -8,6 +8,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import { culoarePentruStil, type Loc } from "../data/locuri";
 import { ICONITA_PIN_SVG } from "../data/iconite-pin";
+import { TILE_LAYER } from "../data/harta";
 
 /* Pinul-picatura: culoarea da STILUL arhitectural (vezi legenda de sub filtre),
    iar iconita din cap da TIPUL locului. Insigna de alama marcheaza "Nerenovat".
@@ -100,7 +101,7 @@ type Props = {
 };
 
 /* Aceiasi parametri ca in proiectul vechi (explorator_bucuresti_4.html):
-   centru Bucuresti [44.435, 26.095], zoom 13, tile layer CARTO light. */
+   centru Bucuresti [44.435, 26.095], zoom 13. Tile layer-ul (Stadia Alidade Smooth) vine din data/harta.ts. */
 export default function Harta({ locuri, onSelect, interactiv = true }: Props) {
   const cuCoordonate = useMemo(
     () =>
@@ -141,9 +142,9 @@ export default function Harta({ locuri, onSelect, interactiv = true }: Props) {
       className="h-full w-full"
     >
       <TileLayer
-        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-        attribution="&copy; OpenStreetMap &copy; CARTO"
-        maxZoom={19}
+        url={TILE_LAYER.url}
+        attribution={TILE_LAYER.attribution}
+        maxZoom={TILE_LAYER.maxZoom}
       />
       {!interactiv && <ReincadrarePreview puncte={puncte} />}
       {/* Gruparea (clustering) e doar pe harta interactiva: pe /harta, pe mobil mai

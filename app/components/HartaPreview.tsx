@@ -22,7 +22,7 @@ type Props = {
 /* Preview-ul de harta din hero-ul homepage-ului: pinurile reale, dar harta e
    inghetata. Optiunile de interactiune sunt oprite din Leaflet (`interactiv={false}`),
    iar clasa `.harta-statica` scoate pointer-events de pe panourile hartii — vezi
-   globals.css. Atributia ramane clicabila, e cerinta OSM/CARTO.
+   globals.css. Atributia ramane clicabila, e cerinta OSM/Stadia.
    `aria-hidden` pentru ca e strict decorativ: harta reala e la /harta, iar butonul
    de sub preview duce acolo. */
 export default function HartaPreview({ locuri }: Props) {
